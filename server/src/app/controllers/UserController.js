@@ -1,8 +1,23 @@
+import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
   async store(req, res) {
-    const { email } = req.body;
+    const { name, email, password } = req.body;
+
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string()
+        .required()
+        .min(6),
+    });
+
+    if (!(await schema.isValid({ name, email, password }))) {
+      return res.status(400).json({ error: 'Campos obrigatórios' });
+    }
 
     const checkEmail = await User.findOne({ where: { email } });
 

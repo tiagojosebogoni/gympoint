@@ -38,4 +38,24 @@ describe('User', () => {
 
     expect(response.status).toBe(401);
   });
+
+  it('todos os campos são obrigatórios', async () => {
+    const response1 = await request(app)
+      .post('/users')
+      .send({ name: '', email: 'abc@gmail.com', password: '123123' });
+
+    expect(response1.status).toBe(400);
+
+    const response2 = await request(app)
+      .post('/users')
+      .send({ name: 'abc', email: '', password: '123123' });
+
+    expect(response2.status).toBe(400);
+
+    const response3 = await request(app)
+      .post('/users')
+      .send({ name: 'abc', email: 'abc@gmail.com', password: '' });
+
+    expect(response3.status).toBe(400);
+  });
 });
