@@ -146,7 +146,7 @@ describe('Student', () => {
         weight: newStudent.weight,
         height: newStudent.height,
       });
-    console.log(JSON.stringify(response.body));
+
     expect(response.status).toBe(401);
   });
 });
