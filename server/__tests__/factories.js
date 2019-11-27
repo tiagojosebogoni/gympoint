@@ -12,7 +12,7 @@ factory.define('User', User, {
 });
 
 factory.define('Student', Student, {
-  name: faker.internet.password(),
+  name: faker.name.findName(),
   email: faker.internet.email(),
   age: faker.random.number({ min: 10, max: 150 }),
   weight: faker.random.number({ min: 10, max: 200, precision: 0.001 }),

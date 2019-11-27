@@ -21,7 +21,7 @@ routes.put('/plans/:id', PlanControlle.update);
 routes.get('/plans/:id', PlanControlle.index);
 routes.delete('/plans/:id', PlanControlle.delete);
 
-routes.post('/students/:id_student/plans/:id_plan', RegisterController.store);
+routes.post('/students/:idStudent/plans/:idPlan', RegisterController.store);
 
 // ////////////////////////////////////////
 routes.get('/dashboard', (req, res) => {
