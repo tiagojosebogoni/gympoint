@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { addMonth, parseISO } from 'date-fns';
+import { addMonth, parseISO, formatISO } from 'date-fns';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 import Register from '../models/Register';
@@ -28,14 +28,16 @@ class RegisterController {
     if (!plan) {
       return res.status(401).json({ error: 'Plano não encontrado' });
     }
-    /*
-    const start_date = parseISO(date);
-    const end_date = addMonth(start_date, plan.duration);
-    */
+
+    const dateFormatted = parseISO(date);
+
+    const endDateFormatted = addMonth(dateFormatted, plan.duration);
+    const end_date = formatISO(endDateFormatted)
+
     const price = plan.price * plan.duration;
     const register = await Register.create({
       start_date: date,
-      end_date: date,
+      end_date,
       price,
       plan_id: plan.id,
       student_id: student.id,
