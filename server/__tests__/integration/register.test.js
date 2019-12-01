@@ -42,10 +42,13 @@ describe('Matrículas', () => {
     expect(response.status).toBe(401);
   });
 
-  it.only('permite update matrícula ', async () => {
+  it('permite update matrícula com usuário logado', async () => {
     const user = await factory.create('User');
-    const plan = await factory.create('Plan');
-    const planUpdate = await factory.create('Plan');
+    const plan = await factory.create('Plan', { duration: 2, price: 50 });
+    const planUpdate = await factory.create('Plan', {
+      duration: 4,
+      price: 100,
+    });
     const student = await factory.create('Student');
 
     const start_date = new Date('2019-01-01');
@@ -59,9 +62,6 @@ describe('Matrículas', () => {
       end_date,
     });
 
-    console.log(
-      `antes:${JSON.stringify(register)} -${plan.duration} - ${plan.price}`
-    );
     const response = await request(app)
       .put(
         `/register/${register.id}/students/${student.id}/plans/${planUpdate.id}`
@@ -70,13 +70,55 @@ describe('Matrículas', () => {
 
     const { price } = response.body;
     const aPrice = planUpdate.duration * planUpdate.price;
-    console.log(
-      `depois: ${JSON.stringify(response.body)} -${planUpdate.duration} - ${
-        planUpdate.price
-      }`
-    );
-    expect(price).toBe(aPrice);
 
-    expect(true).toBe(true);
+    expect(price).toBe(aPrice);
+  });
+
+  it('permite excluir matrícula com usuário logado', async () => {
+    const user = await factory.create('User');
+    const plan = await factory.create('Plan');
+
+    const student = await factory.create('Student');
+
+    const start_date = new Date('2019-01-01');
+    const end_date = addMonths(start_date, plan.duration);
+
+    const register = await factory.create('Register', {
+      student_id: student.id,
+      plan_id: plan.id,
+      price: plan.duration * plan.price,
+      start_date,
+      end_date,
+    });
+
+    const response = await request(app)
+      .delete(`/register/${register.id}`)
+      .set('Authorization', `Bearer ${user.generateToken()}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('não permite excluir matrícula sem passar o id', async () => {
+    const user = await factory.create('User');
+    const plan = await factory.create('Plan');
+
+    const student = await factory.create('Student');
+
+    const start_date = new Date('2019-01-01');
+    const end_date = addMonths(start_date, plan.duration);
+
+    await factory.create('Register', {
+      student_id: student.id,
+      plan_id: plan.id,
+      price: plan.duration * plan.price,
+      start_date,
+      end_date,
+    });
+
+    const response = await request(app)
+      .delete(`/register/0`)
+      .set('Authorization', `Bearer ${user.generateToken()}`);
+
+    expect(response.status).toBe(401);
   });
 });

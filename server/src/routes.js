@@ -30,6 +30,8 @@ routes.put(
   RegisterController.update
 );
 
+routes.delete('/register/:id', RegisterController.delete);
+
 // ////////////////////////////////////////
 routes.get('/dashboard', (req, res) => {
   return res.status(200).send();

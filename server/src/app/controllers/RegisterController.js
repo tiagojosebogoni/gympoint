@@ -73,19 +73,18 @@ class RegisterController {
     return res.json(registerUpdate);
   }
 
-  /*
   async delete(req, res) {
     const { id } = req.params;
 
-    const plan = await Plan.findByPk(id);
-    if (!plan) {
+    const register = await Register.findByPk(id);
+    if (!register) {
       return res.status(401).send();
     }
 
-    await plan.destroy();
+    await register.destroy();
 
     return res.status(200).send();
-  } */
+  }
 }
 
 export default new RegisterController();
