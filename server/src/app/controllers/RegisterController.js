@@ -5,7 +5,6 @@ import Student from '../models/Student';
 import Register from '../models/Register';
 
 class RegisterController {
-  // async index(req, res) {}
   async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date(),

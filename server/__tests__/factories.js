@@ -6,6 +6,7 @@ import Student from '../src/app/models/Student';
 import Plan from '../src/app/models/Plan';
 import Register from '../src/app/models/Register';
 import Checkin from '../src/app/models/Checkin';
+import Help_Order from '../src/app/models/Help_Order';
 
 factory.define('User', User, {
   name: faker.name.findName(),
@@ -30,5 +31,6 @@ factory.define('Plan', Plan, {
 factory.define('Checkin', Checkin, {});
 
 factory.define('Register', Register, {});
+factory.define('Help_Order', Help_Order, {});
 
 export default factory;
