@@ -40,7 +40,7 @@ routes.delete('/register/:id', RegisterController.delete);
 
 routes.get('/help-orders', ResponderController.indexAll);
 routes.get('/students/:student_id/help-orders', ResponderController.index);
-routes.post(`/help-orders/:id}/answer`, ResponderController.store);
+routes.post('/help-orders/:id/answer', ResponderController.store);
 
 // ////////////////////////////////////////
 routes.get('/dashboard', (req, res) => {

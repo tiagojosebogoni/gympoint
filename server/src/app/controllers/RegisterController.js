@@ -1,8 +1,11 @@
 import * as Yup from 'yup';
-import { addMonths } from 'date-fns';
+import { addMonths, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 import Register from '../models/Register';
+
+import Mail from '../../lib/Mail';
 
 class RegisterController {
   async store(req, res) {
@@ -37,6 +40,20 @@ class RegisterController {
       price,
       plan_id: plan.id,
       student_id: student.id,
+    });
+
+    const dateStartFomatted = format(start_date, "dd 'de' MMMM 'de' yyyy'", {
+      locale: pt,
+    });
+    const dateEndFomatted = format(end_date, "dd 'de' MMMM 'de' yyyy'", {
+      locale: pt,
+    });
+
+    await Mail.sendMail({
+      to: `${student.name} <${student.email}>`,
+      subject: 'Matrícula realizada',
+      text: `Parabéns, ${student.name}
+      sua matrícula foi realiza com início em ${dateStartFomatted} e o término em ${dateEndFomatted}`,
     });
 
     return res.json(register);

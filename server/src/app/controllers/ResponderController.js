@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import HelpOrder from '../models/Help_Order';
 import Student from '../models/Student';
 
+import Mail from '../../lib/Mail';
+
 class ResponderController {
   async indexAll(req, res) {
     const helpOrder = await HelpOrder.findAndCountAll({
@@ -35,16 +37,30 @@ class ResponderController {
 
     const { id } = req.params;
     const { answer } = req.body;
-    const helpOrder = await HelpOrder.findByPk(id);
+
+    const helpOrder = await HelpOrder.findByPk(id, {
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
 
     if (!helpOrder) {
       return res.status(401).json({ error: 'Pergunta não encontrada' });
     }
 
     helpOrder.update({ answer, answer_at: new Date() });
-    return res.json(helpOrder);
 
-    // fazer a parte de mandar email com a resposta
+    await Mail.sendMail({
+      to: `${helpOrder.student.name} <${helpOrder.student.email}>`,
+      subject: 'Pergunta respondida',
+      text: answer,
+    });
+
+    return res.json(helpOrder);
   }
 }
 

@@ -95,12 +95,31 @@ describe('Help_Order', () => {
     });
 
     const response = await request(app)
-      .get(`/help-orders/${helpOrder.id}/answer`)
+      .post(`/help-orders/${helpOrder.id}/answer`)
       .set('Authorization', `Bearer ${user.generateToken()}`)
-      .send();
+      .send({ answer: 'respondido' });
 
     const check = response.body.answer_at === null;
 
+    expect(response.status).toBe(200);
     expect(check).toBe(false);
+  });
+
+  it('verifica se ao mandar email retorna os dados do studante', async () => {
+    const user = await factory.create('User');
+    const student = await factory.create('Student');
+
+    const helpOrder = await factory.create('Help_Order', {
+      student_id: student.id,
+      question: 'alguma coisa',
+    });
+
+    const response = await request(app)
+      .post(`/help-orders/${helpOrder.id}/answer`)
+      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .send({ answer: 'respondido' });
+
+    expect(response.body.student).toHaveProperty('name');
+    expect(response.body.student.email).toBe(student.email);
   });
 });
