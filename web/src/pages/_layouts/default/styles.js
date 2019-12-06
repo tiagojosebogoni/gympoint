@@ -8,24 +8,22 @@ export const Wrapper = styled.div`
   justify-items: center;
   align-items: center;
 `
-export const Content = styled.div`
+export const Header = styled.div`
+  height: 164px;
   width: 100%;
-  max-width: 315;
-  text-align: center;
+  display: flex;
+  background: #FFF;
+  align-items: center;
+`;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
+export const Content = styled.div`
+  background: #f11;
+  align-items: center;
+  height: 100%;
+`;
 
-    input {
-      background: rgba(0, 0, 0, 0.1);
-      border: 0;
-      border-radius: 4px;
-      height: 44px;
-      padding: 0 15px;
-      color: #FFF;
-      margin: 0 0 10px;
-    }
-  }
-`
+export const User = styled.div`
+  background: #f99;
+  align-items: center;
+  height: 100%;
+`;

@@ -4,11 +4,15 @@ import Route from './Route';
 
 import SignIn from '../pages/SignIn';
 
+import ListStudent from '../pages/Student/List';
+
 export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
-      <Route path="/" component={()=> <h1>404</h1>} />
+
+      <Route path="/" isPrivate component={ListStudent} />
+      <Route path="/" component={() => <h1>404</h1>} />
     </Switch>
   );
 }

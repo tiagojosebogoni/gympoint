@@ -1,13 +1,18 @@
-import React from 'react'
+import React from 'react';
 
-import { Wrapper, Content } from './styles';
+import logo from '../../../assets/logo.png';
+import { Wrapper, Header, Content, User } from './styles';
 
 export default function DefaultLayout({children}){
   return (
   <Wrapper>
-    <Content>
-      {children}
-    </Content>
+    <Header>
+      <Content>
+        <img src={logo} alt="Gympoint" height="60" />
+      </Content>
+      <User></User>
+    </Header>
+    {children}
   </Wrapper>
   );
 }

@@ -8,13 +8,13 @@ export default function RouterWrapper({
   isPrivate = false,
   ...rest
 }){
-  const signed = false;
+  const signed = true;
 
   if (!signed && isPrivate){
     return <Redirect to="/" />
   }
 
-  const Layout = signed? DefaultLayout : AuthLayout;
+  const Layout = signed ? DefaultLayout : AuthLayout;
 
   return <Route { ...rest } render={
     props => (<Layout>
