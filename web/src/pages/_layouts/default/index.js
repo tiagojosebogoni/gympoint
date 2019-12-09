@@ -1,18 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Header from '../../../components/Header';
 
-import logo from '../../../assets/logo.png';
-import { Wrapper, Header, Content, User } from './styles';
+import { Wrapper } from './styles';
 
-export default function DefaultLayout({children}){
+export default function DefaultLayout({ children }) {
   return (
-  <Wrapper>
-    <Header>
-      <Content>
-        <img src={logo} alt="Gympoint" height="60" />
-      </Content>
-      <User></User>
-    </Header>
-    {children}
-  </Wrapper>
+    <Wrapper>
+      <Header />
+      {children}
+    </Wrapper>
   );
 }
+
+DefaultLayout.propTypes = {
+  children: PropTypes.element.isRequired,
+};
