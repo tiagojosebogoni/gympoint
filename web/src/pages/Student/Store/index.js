@@ -35,15 +35,19 @@ export default function Store() {
         <span>ENDEREÇO DE E-MAIL</span>
         <Input name="email" type="email" placeholder="example@email.com" />
 
-        <div>
-          <span>IDADE</span>
-          <Input name="age" placeholder="" />
-
-          <span>PESO (em kg)</span>
-          <Input name="weight" placeholder="" />
-
-          <span>ALTURA</span>
-          <Input name="height" placeholder="" />
+        <div className="coluna">
+          <div className="linha">
+            <span>IDADE</span>
+            <Input name="age" placeholder="" />
+          </div>
+          <div className="linha">
+            <span>PESO (em kg)</span>
+            <Input name="weight" placeholder="" />
+          </div>
+          <div className="linha">
+            <span>ALTURA</span>
+            <Input name="height" placeholder="" />
+          </div>
         </div>
       </Form>
     </Container>

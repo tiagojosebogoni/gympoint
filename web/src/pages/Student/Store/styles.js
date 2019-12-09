@@ -24,11 +24,22 @@ export const Container = styled.div`
       }
     }
 
-    > span {
+    span {
       color: #444444;
       align-self: flex-start;
       margin: 10px 0 10px;
       font-weight: bold;
+    }
+
+    .coluna{
+      display: flex;
+      flex-direction: row;
+    }
+
+    .linha{
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
     }
   }
 `;
