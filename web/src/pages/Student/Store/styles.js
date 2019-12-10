@@ -12,7 +12,7 @@ export const Container = styled.div`
 
     input {
       background: #ffffff;
-      border: 1px solid #dddddd;
+      border: 2px solid #dddddd;
       border-radius: 4px;
       height: 44px;
       padding: 0 15px;
@@ -24,19 +24,19 @@ export const Container = styled.div`
       }
     }
 
-    span {
+    h4 {
       color: #444444;
       align-self: flex-start;
       margin: 10px 0 10px;
       font-weight: bold;
     }
 
-    .coluna{
+    .coluna {
       display: flex;
       flex-direction: row;
     }
 
-    .linha{
+    .linha {
       display: flex;
       flex-direction: column;
       margin-right: 20px;

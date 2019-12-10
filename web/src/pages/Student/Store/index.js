@@ -1,15 +1,28 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import * as Yup from 'yup';
 import { Container, Header, ButtonBack, ButtonConfirm } from './styles';
 
+const schema = Yup.object().shape({
+  name: Yup.string().required('Nome é obrigatório'),
+  email: Yup.string()
+    .required('E-mail é obrigatório')
+    .email('Insira um Nome Completo'),
+  age: Yup.number()
+    .positive()
+    .integer()
+    .required(),
+  weight: Yup.number().required(),
+  height: Yup.number().required(),
+});
 export default function Store() {
   const student = '';
   function handleSubmit(data) {}
 
   return (
     <Container>
-      <Form initialData={student} onSubmit={handleSubmit}>
+      <Form schema={schema} initialData={student} onSubmit={handleSubmit}>
         <Header>
           <h2>Cadastro de alunos</h2>
           <div>
@@ -29,23 +42,23 @@ export default function Store() {
           </div>
         </Header>
 
-        <span>NOME COMPLETO</span>
+        <h4>NOME COMPLETO</h4>
         <Input name="name" placeholder="John Doe" />
 
-        <span>ENDEREÇO DE E-MAIL</span>
+        <h4>ENDEREÇO DE E-MAIL</h4>
         <Input name="email" type="email" placeholder="example@email.com" />
 
         <div className="coluna">
           <div className="linha">
-            <span>IDADE</span>
+            <h4>IDADE</h4>
             <Input name="age" placeholder="" />
           </div>
           <div className="linha">
-            <span>PESO (em kg)</span>
+            <h4>PESO (em kg)</h4>
             <Input name="weight" placeholder="" />
           </div>
           <div className="linha">
-            <span>ALTURA</span>
+            <h4>ALTURA</h4>
             <Input name="height" placeholder="" />
           </div>
         </div>
