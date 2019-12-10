@@ -24,6 +24,13 @@ export const Container = styled.div`
       }
     }
 
+    > span {
+      color: #fb6f91;
+      align-self: flex-start;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+
     h4 {
       color: #444444;
       align-self: flex-start;
