@@ -7,8 +7,19 @@ export const Container = styled.div`
 `;
 
 export const StudentTable = styled.table`
+  thead {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    text-align: left;
+  }
 
-  li {
-    display: flex;
+  tbody {
+    span {
+      font-size: 16px;
+      color: #666;
+      text-align: center;
+      line-height: 20px;
+    }
   }
 `;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import { Container, StudentTable } from './styles';
-import { Header, ButtonConfirm } from '../Store/styles'
+import { Header, ButtonConfirm } from '../Store/styles';
 
 export default function List() {
   return (
@@ -26,6 +27,8 @@ export default function List() {
               <th>NOME</th>
               <th>EMAIL</th>
               <th>IDADE</th>
+              <th />
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -36,42 +39,11 @@ export default function List() {
                 <td>
                 <span>tiago@gmail.com</span>
               </td>
-                <td>
-                  <span>33</span>
-                </td>
-            </tr>
-            <tr>
               <td>
-                <span>Tiago</span>
+                <span>33</span>
               </td>
-                <td>
-                <span>tiago@gmail.com</span>
-              </td>
-                <td>
-                  <span>33</span>
-                </td>
-            </tr>
-            <tr>
-              <td>
-                <span>Tiago</span>
-              </td>
-                <td>
-                <span>tiago@gmail.com</span>
-              </td>
-                <td>
-                  <span>33</span>
-                </td>
-            </tr>
-            <tr>
-              <td>
-                <span>Tiago</span>
-              </td>
-                <td>
-                <span>tiago@gmail.com</span>
-              </td>
-                <td>
-                  <span>33</span>
-                </td>
+              <Link >Editar</Link>
+              <Link >Apagar</Link>
             </tr>
 
           </tbody>
