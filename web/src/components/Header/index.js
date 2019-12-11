@@ -10,10 +10,10 @@ export default function Header() {
       <Content>
         <img src={logo} alt="Gympoint " height={40}/>
         <Menu>
-          <Link to="/profile">ALUNOS</Link>
-          <Link to="/profile">PLANOS</Link>
-          <Link to="/profile">MATRÍCULA</Link>
-          <Link to="/profile">PEDIDO DE AUXÍLIO</Link>
+          <Link to="/student/list">ALUNOS</Link>
+          <Link to="/">PLANOS</Link>
+          <Link to="/">MATRÍCULA</Link>
+          <Link to="/">PEDIDO DE AUXÍLIO</Link>
         </Menu>
       </Content>
       <Profile>

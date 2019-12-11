@@ -61,6 +61,11 @@ export const Header = styled.div`
     align-items: center;
     justify-content: center;
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
 `;
 
 export const ButtonBack = styled.button`

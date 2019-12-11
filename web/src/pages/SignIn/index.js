@@ -25,7 +25,7 @@ export default function SignIn() {
 
       <Form schema={schema} onSubmit={handleSubmit}>
         <span>SEU E-MAIL</span>
-        <Input name="email" type="email" placeholder="exemplo@gmail.com" />
+        <Input name="email" type="email" placeholder="exemplo@gmail.com"/>
 
         <span>SUA SENHA</span>
         <Input name="password" type="password" placeholder="*******" />
