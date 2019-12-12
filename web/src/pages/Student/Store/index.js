@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 import * as Yup from 'yup';
 import { Container, Header, ButtonBack, ButtonConfirm } from './styles';
+import api from '../../../services/api';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
@@ -16,9 +17,25 @@ const schema = Yup.object().shape({
   weight: Yup.number().required(),
   height: Yup.number().required(),
 });
-export default function Store() {
-  const student = '';
-  function handleSubmit(data) {}
+export default function Store({ match }) {
+  const { id, mode } = match.params;
+
+  const [student, setStudent] = useState('');
+  useEffect(() => {
+    async function getStudent() {
+      const response = await api.get(`students/${id}`);
+
+      setStudent(response.data);
+    }
+
+    getStudent();
+  }, [id]);
+
+  function handleSubmit(data) {
+    if (mode === 'D') {
+      document.addEventListener(<span>confirma exclusão</span>);
+    }
+  }
 
   return (
     <Container>

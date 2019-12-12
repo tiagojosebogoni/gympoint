@@ -2,6 +2,13 @@ import * as Yup from 'yup';
 import Student from '../models/Student';
 
 class StudentController {
+  async index(req, res) {
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+    return res.json(student);
+  }
+
   async store(req, res) {
     const { name, email, age, weight, height } = req.body;
 
@@ -65,6 +72,12 @@ class StudentController {
 
     const newStudent = await student.update(req.body);
     return res.json(newStudent);
+  }
+
+  async indexAll(req, res) {
+    const students = await Student.findAll();
+
+    return res.json(students);
   }
 }
 

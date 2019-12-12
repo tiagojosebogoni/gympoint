@@ -24,14 +24,14 @@ export const StudentTable = styled.table`
     }
 
     .edit {
-      font-size:15px;
-      color:#4d85ee;
+      font-size: 15px;
+      color: #4d85ee;
       margin: 0 30px 0 10px;
     }
 
     .delete {
-      font-size:15px;
-      color:#de3b3b;
+      font-size: 15px;
+      color: #de3b3b;
     }
   }
 `;

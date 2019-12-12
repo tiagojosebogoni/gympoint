@@ -1,4 +1,4 @@
-import produde from 'immer';
+import produce from 'immer';
 
 const INITIAL_STATE = {
   token: null,
@@ -6,15 +6,16 @@ const INITIAL_STATE = {
 };
 
 export default function auth(state = INITIAL_STATE, action) {
-  return produde(state, draft => {
+  return produce(state, draft => {
     switch (action.type) {
       case '@auth/SIGN_IN_REQUEST': {
         draft.loading = true;
         break;
       }
       case '@auth/SIGN_IN_SUCCESS': {
-        draft.tokne = action.payload.token;
+        draft.token = action.payload.token;
         draft.signed = true;
+        draft.loading = false;
         break;
       }
 

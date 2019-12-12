@@ -58,34 +58,49 @@ export const Header = styled.div`
 
   div {
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   h2 {
     font-size: 24px;
     font-weight: bold;
   }
+
+  input {
+    background: #ffffff;
+    border: 2px solid #dddddd;
+    border-radius: 4px;
+    height: 36px;
+    padding: 0 15px;
+    margin: 0 0 10px;
+    box-sizing: border-box;
+
+    border- &::placeholder {
+      color: rgba(255, 255, 255, 0.1);
+    }
+  }
 `;
 
 export const ButtonBack = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 36px;
   width: 112px;
   color: #fff;
-  align-items: center;
   background: #ccc;
   border-radius: 4px;
   border: 0;
+  margin-right: 20px;
 
   svg {
-    color: #fff;
+    display: flex;
     height: 20px;
     width: 20px;
   }
 
   span {
-    color: #ffffff;
-    margin-left: 10px;
+    padding-top: 2px;
+    display: flex;
     font-size: 14px;
     font-weight: bold;
   }
@@ -93,5 +108,4 @@ export const ButtonBack = styled.button`
 
 export const ButtonConfirm = styled(ButtonBack)`
   background: #ee4d64;
-  margin-left: 20px;
 `;
