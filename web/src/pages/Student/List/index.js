@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -37,13 +37,15 @@ export default function List() {
     loadStudents();
   }, []);
 
+
   const classes = useStyles();
+
   return (
     <Container>
       <Header>
         <h2>Gerenciando alunos</h2>
         <div>
-          <ButtonConfirm onClick="handleAdd">
+          <ButtonConfirm onClick={()=>{}}>
             <div>
               <MdAdd />
               <span>Cadastrar</span>
@@ -53,34 +55,36 @@ export default function List() {
           <Input name="find" placeholder="buscar aluno" />
         </div>
       </Header>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>NOME</TableCell>
-            <TableCell>EMAIL</TableCell>
-            <TableCell>IDADE</TableCell>
-            <TableCell />
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {students.map(student => (
-            <TableRow key={student.id}>
-              <TableCell component="th" scope="row">
-                {student.name}
-              </TableCell>
-              <TableCell>{student.email}</TableCell>
-              <TableCell>{student.age}</TableCell>
-              <TableCell>
-                <Link to={`/Student/Store/${student.id}/M`}>Editar</Link>
-              </TableCell>
-              <TableCell>
-                <Link to={`/Student/Store/${student.id}/D`}>Excluir</Link>
-              </TableCell>
+      <div className="grid">
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>NOME</TableCell>
+              <TableCell>EMAIL</TableCell>
+              <TableCell>IDADE</TableCell>
+              <TableCell />
+              <TableCell />
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {students.map(student => (
+              <TableRow key={student.id}>
+                <TableCell component="th" scope="row">
+                  {student.name}
+                </TableCell>
+                <TableCell>{student.email}</TableCell>
+                <TableCell>{student.age}</TableCell>
+                <TableCell>
+                  <Link className="edit" to={`/Student/Store/${student.id}/M`}>Editar</Link>
+                </TableCell>
+                <TableCell>
+                  <Link className="delete" to={`/Student/Store/${student.id}/D`}>Excluir</Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </Container>
   );
 }

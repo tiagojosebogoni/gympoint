@@ -17,7 +17,7 @@ const schema = Yup.object().shape({
   weight: Yup.number().required(),
   height: Yup.number().required(),
 });
-export default function Store({ match }) {
+export default function Store({ match, ...props } ) {
   const { id, mode } = match.params;
 
   const [student, setStudent] = useState('');

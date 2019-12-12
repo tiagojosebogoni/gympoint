@@ -41,6 +41,7 @@ export const Container = styled.div`
     .coluna {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
     }
 
     .linha {
@@ -53,16 +54,18 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-
-  div {
-    display: flex;
-  }
 
   h2 {
     font-size: 24px;
     font-weight: bold;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   input {
@@ -96,6 +99,7 @@ export const ButtonBack = styled.button`
     display: flex;
     height: 20px;
     width: 20px;
+    margin-right: 10px;
   }
 
   span {
@@ -108,4 +112,5 @@ export const ButtonBack = styled.button`
 
 export const ButtonConfirm = styled(ButtonBack)`
   background: #ee4d64;
+  margin-right: 0;
 `;

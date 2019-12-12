@@ -3,8 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: #fff;
   padding: 50px;
+
+  .grid {
+    margin: 20px 0;
+    background: #fff;
+  }
 `;
 
 export const StudentTable = styled.table`
