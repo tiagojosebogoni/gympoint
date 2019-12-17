@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 import * as Yup from 'yup';
-import { Container, Header, ButtonBack, ButtonConfirm } from './styles';
+import { Container, Header, ButtonBack, Title, Component, ButtonConfirm, Fields, Field} from './styles';
 import api from '../../../services/api';
-import TInput from '../../../components/Input'
 const schema = Yup.object().shape({
   title: Yup.string().required('Título é obrigatório'),
   duration: Yup.number().required('Tempo é obrigatório '),
@@ -14,45 +13,51 @@ const schema = Yup.object().shape({
     .required(),
 });
 export default function Store() {
+
+  function handleSubmit(data){
+    console.log(data)
+  }
+
   return (
-    <Container>
-      <Form schema={schema}>
+    <Container onSubmit={handleSubmit}>
+      <Form>
         <Header>
-          <h2>Cadastro de plano</h2>
-          <div>
+          <Title>Cadastro de plano</Title>
+          <Component>
             <ButtonBack>
-              <div>
-                <MdKeyboardArrowLeft size={20} />
-                <span>VOLTAR</span>
-              </div>
+              <MdKeyboardArrowLeft size={20} />
+              <span>VOLTAR</span>
             </ButtonBack>
-
-            <ButtonConfirm>
-              <div>
-                <MdDone size={20} />
-                <span>SALVAR</span>
-              </div>
+            <ButtonConfirm type="submit">
+              <MdDone size={20} />
+              <span>VOLTAR</span>
             </ButtonConfirm>
-          </div>
+          </Component>
         </Header>
-<TInput />
-        <h4>TÍTULO DO PLANO </h4>
-        <Input name="title" />
+        <Fields>
+          <div>
+            <Field>
+              <span>TÍTULO DO PLANO</span>
+              <Input name="title" />
+            </Field>
+          </div>
 
-        <div className="coluna">
-          <div className="linha">
-            <h4>DURAÇÃO (em meses)</h4>
-            <Input name="duration" />
+          <div>
+            <Field>
+              <span>DURAÇÃO (em meses)</span>
+              <Input name="duration" />
+            </Field>
+            <Field>
+              <span>PREÇO MENSAL</span>
+              <Input name="price" />
+            </Field>
+            <Field>
+              <span>PREÇO TOTAL</span>
+              <Input name="totalPrice" />
+            </Field>
           </div>
-          <div className="linha">
-            <h4>PREÇO MENSAL</h4>
-            <Input name="priceMonth" />
-          </div>
-          <div className="linha">
-            <h4>PREÇO TOTAL</h4>
-            <Input name="totalPrice" />
-          </div>
-        </div>
+
+        </Fields>
       </Form>
     </Container>
   );
