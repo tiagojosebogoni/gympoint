@@ -39,3 +39,13 @@ export const StudentTable = styled.table`
     }
   }
 `;
+
+export const Title = styled.text`
+  font-weight: bold;
+  font-size: 24px;
+  color:#444444;
+`;
+
+export const Component = styled.div`
+  display: flex;
+`;

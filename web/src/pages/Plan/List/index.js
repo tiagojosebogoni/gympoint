@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Header, ButtonConfirm } from '../Store/styles';
-import { Container } from './styles';
+import { Container, Title, Component } from './styles';
 
 import api from '../../../services/api';
 
@@ -41,15 +41,13 @@ export default function List() {
   return (
     <Container>
       <Header>
-        <h2>Gerenciando alunos</h2>
-        <div>
-          <ButtonConfirm onClick={() => {}}>
-            <div>
-              <MdAdd />
-              <span>Cadastrar</span>
-            </div>
+        <Title>Gerenciando planos</Title>
+        <Component>
+          <ButtonConfirm type="submit">
+            <MdAdd size={20} />
+            <span>CADASTRAR</span>
           </ButtonConfirm>
-        </div>
+        </Component>
       </Header>
       <div className="grid">
         <Table className={classes.table} aria-label="simple table">

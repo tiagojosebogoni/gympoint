@@ -14,6 +14,7 @@ export const Container = styled.div`
     input {
       background: #fff;
       border: 2px solid #dddddd;
+      color: #666666;
       border-radius: 4px;
       height: 44px;
       padding: 0 15px;
@@ -40,7 +41,7 @@ export const Fields = styled.div`
   margin: 20px 0;
   background: #fff;
   border-radius: 4px;
-  padding: 30px;
+  padding: 20px;
   width: 100%;
 
   > div {
@@ -53,6 +54,7 @@ export const Field = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin: 10px 10px 0 10px;
 
   span {
     margin-bottom: 10px;
@@ -83,12 +85,12 @@ export const ButtonBack = styled.button`
   align-items: center;
   justify-content: center;
   height: 36px;
-  width: 112px;
   color: #fff;
   background: #ccc;
   border-radius: 4px;
   border: 0;
   margin-right: 20px;
+  padding: 0 10px 0 10px;
 
   svg {
     display: flex;
@@ -98,7 +100,6 @@ export const ButtonBack = styled.button`
   }
 
   span {
-    padding-top: 2px;
     display: flex;
     font-size: 14px;
     font-weight: bold;

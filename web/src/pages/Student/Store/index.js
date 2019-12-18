@@ -33,7 +33,6 @@ export default function Store({ match, ...props } ) {
 
   function handleSubmit(data) {
     if (mode === 'D') {
-      document.addEventListener(<span>confirma exclusão</span>);
     }
   }
 

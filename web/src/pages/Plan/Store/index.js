@@ -30,7 +30,7 @@ export default function Store() {
             </ButtonBack>
             <ButtonConfirm type="submit">
               <MdDone size={20} />
-              <span>VOLTAR</span>
+              <span>SALVAR</span>
             </ButtonConfirm>
           </Component>
         </Header>
@@ -53,7 +53,7 @@ export default function Store() {
             </Field>
             <Field>
               <span>PREÇO TOTAL</span>
-              <Input name="totalPrice" />
+              <Input name="totalPrice" readOnly={true} />
             </Field>
           </div>
 
