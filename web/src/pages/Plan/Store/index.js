@@ -2,8 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 import * as Yup from 'yup';
-import { Container, Header, ButtonBack, Title, Component, ButtonConfirm, Fields, Field} from './styles';
+import {
+  Container,
+  Header,
+  ButtonBack,
+  Title,
+  Component,
+  ButtonConfirm,
+  Fields,
+  Field,
+} from './styles';
 import api from '../../../services/api';
+
 const schema = Yup.object().shape({
   title: Yup.string().required('Título é obrigatório'),
   duration: Yup.number().required('Tempo é obrigatório '),
@@ -12,15 +22,34 @@ const schema = Yup.object().shape({
     .integer()
     .required(),
 });
-export default function Store() {
+export default function Store({ match, ...props }) {
+  const { id, mode } = match.params;
 
-  function handleSubmit(data){
-    console.log(data)
-  }
+  const [plan, setPlan] = useState('');
+
+  useEffect(() => {
+    async function getPlan() {
+      const response = await api.get(`plans/${1}`);
+      const { duration } = response.data;
+      const { price } = response.data;
+
+      const planFormatted = {
+        title: response.data.title,
+        duration: response.data.duration,
+        priceFormatted: `R$${response.data.price}`,
+        priceTotalFormatted: `R$${price * duration}`,
+      };
+      setPlan(planFormatted);
+    }
+
+    getPlan();
+  }, [id]);
+
+  function handleSubmit() {}
 
   return (
     <Container onSubmit={handleSubmit}>
-      <Form>
+      <Form initialData={plan}>
         <Header>
           <Title>Cadastro de plano</Title>
           <Component>
@@ -49,14 +78,13 @@ export default function Store() {
             </Field>
             <Field>
               <span>PREÇO MENSAL</span>
-              <Input name="price" />
+              <Input name="priceFormatted" />
             </Field>
             <Field>
               <span>PREÇO TOTAL</span>
-              <Input name="totalPrice" readOnly={true} />
+              <Input name="priceTotalFormatted" readOnly />
             </Field>
           </div>
-
         </Fields>
       </Form>
     </Container>

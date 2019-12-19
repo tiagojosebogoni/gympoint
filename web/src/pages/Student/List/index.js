@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -37,7 +37,6 @@ export default function List() {
     loadStudents();
   }, []);
 
-
   const classes = useStyles();
 
   return (
@@ -45,7 +44,7 @@ export default function List() {
       <Header>
         <h2>Gerenciando alunos</h2>
         <div>
-          <ButtonConfirm onClick={()=>{}}>
+          <ButtonConfirm onClick={() => {}}>
             <div>
               <MdAdd />
               <span>Cadastrar</span>
@@ -75,10 +74,17 @@ export default function List() {
                 <TableCell>{student.email}</TableCell>
                 <TableCell>{student.age}</TableCell>
                 <TableCell>
-                  <Link className="edit" to={`/Student/Store/${student.id}/M`}>Editar</Link>
+                  <Link className="edit" to={`/Student/Store/${student.id}/M`}>
+                    Editar
+                  </Link>
                 </TableCell>
                 <TableCell>
-                  <Link className="delete" to={`/Student/Store/${student.id}/D`}>Excluir</Link>
+                  <Link
+                    className="delete"
+                    to={`/Student/Store/${student.id}/D`}
+                  >
+                    Excluir
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

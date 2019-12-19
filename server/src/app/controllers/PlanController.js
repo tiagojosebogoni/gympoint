@@ -4,14 +4,14 @@ import Plan from '../models/Plan';
 class PlanController {
   async index(req, res) {
     const { id } = req.params;
-
-    if (id === 0 || id === undefined) {
-      const plans = await Plan.findAll();
-      return res.json(plans);
+    if (id > 0) {
+      const plan = await Plan.findByPk(id);
+      return res.json(plan);
     }
 
-    const plan = await Plan.findByPk(id);
-    return res.json(plan);
+    const plans = await Plan.findAll();
+
+    return res.json(plans);
   }
 
   async store(req, res) {

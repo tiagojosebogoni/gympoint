@@ -43,9 +43,47 @@ export const StudentTable = styled.table`
 export const Title = styled.text`
   font-weight: bold;
   font-size: 24px;
-  color:#444444;
+  color: #444444;
 `;
 
 export const Component = styled.div`
   display: flex;
+`;
+
+export const PlansTable = styled.table`
+  margin-top: 40px;
+  width: 100%;
+  border-spacing: 0px;
+
+  tr {
+    th {
+      color: #444;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      padding: 2em 2em 2em;
+      background: #ffffff;
+    }
+
+    td {
+      font-size: 16px;
+      color: #666;
+      padding: 1em 2em;
+      background: #ffffff;
+
+      .edit {
+        color: #4d85ee;
+        font-size: 15px;
+      }
+      .remove {
+        color: #de3b3b;
+        font-size: 15px;
+      }
+    }
+
+    + tr td {
+      padding: 0, 30px, 0, 30px;
+      border-top: 1px solid #d7d7d7;
+    }
+  }
 `;

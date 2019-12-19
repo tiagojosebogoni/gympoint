@@ -1,84 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
-
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { Header, ButtonConfirm } from '../Store/styles';
-import { Container, Title, Component } from './styles';
+import { Container, Title, PlansTable, Component } from './styles';
 
 import api from '../../../services/api';
 
 export default function List() {
-  const useStyles = makeStyles({
-    root: {
-      width: '100%',
-      overflowX: 'auto',
-    },
-    table: {
-      minWidth: 650,
-    },
-  });
-
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {
-    async function loadPlans() {
-      const response = await api.get('plans');
+    async function loadStudents() {
+      const response = await api.get('plans/0');
 
       setPlans(response.data);
     }
 
-    loadPlans();
+    loadStudents();
   }, []);
-
-  const classes = useStyles();
 
   return (
     <Container>
+      {plans.title}
       <Header>
         <Title>Gerenciando planos</Title>
         <Component>
-          <ButtonConfirm type="submit">
+          <ButtonConfirm type="button">
             <MdAdd size={20} />
             <span>CADASTRAR</span>
           </ButtonConfirm>
         </Component>
       </Header>
-      <div className="grid">
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>TÍTULO</TableCell>
-              <TableCell>DURAÇÃO</TableCell>
-              <TableCell>VALOR p/ MÊS</TableCell>
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {plans.map(plan => (
-              <TableRow key={plan.id}>
-                <TableCell component="th" scope="row">
-                  {plan.title}
-                </TableCell>
-                <TableCell>{plan.duration}</TableCell>
-                <TableCell>{plan.price}</TableCell>
-                <TableCell>
-                  <Link className="edit" to={`/Plan/Store/${plan.id}/M`}> Editar </Link>
-                </TableCell>
-                <TableCell>
-                  <Link className="delete" to={`/Plan/Store/${plan.id}/D`}> Excluir </Link>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <PlansTable>
+        <thead>
+          <tr>
+            <th>TÍTULO</th>
+            <th>DURAÇÃO</th>
+            <th>VALOR p/MÊS</th>
+            <th />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {plans.map(plan => (
+            <tr>
+              <td>{plan.title}</td>
+              <td>{plan.duration}</td>
+              <td>R${plan.price}</td>
+              <td>
+                <Link className="edit" to={`/plan/Store/${plan.id}/M`}>
+                  Editar
+                </Link>
+              </td>
+              <td>
+                <Link className="remove" to={`/plan/Store/${plan.id}/D`}>
+                  Excluir
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </PlansTable>
     </Container>
   );
 }
