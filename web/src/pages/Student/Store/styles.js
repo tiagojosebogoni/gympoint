@@ -4,6 +4,7 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 900px;
 
   form {
     display: flex;
@@ -11,8 +12,9 @@ export const Container = styled.div`
     margin: 50px 30px;
 
     input {
-      background: #ffffff;
+      background: #fff;
       border: 2px solid #dddddd;
+      color: #666666;
       border-radius: 4px;
       height: 44px;
       padding: 0 15px;
@@ -30,25 +32,35 @@ export const Container = styled.div`
       margin: 0 0 10px;
       font-weight: bold;
     }
+  }
+`;
 
-    h4 {
-      color: #444444;
-      align-self: flex-start;
-      margin: 10px 0 10px;
-      font-weight: bold;
-    }
+export const Fields = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  width: 100%;
 
-    .coluna {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
+  > div {
+    display: flex;
+    flex-direction: row;
+  }
+`;
 
-    .linha {
-      display: flex;
-      flex-direction: column;
-      margin-right: 20px;
-    }
+export const Field = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 10px 0 10px;
+
+  span {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #444444;
   }
 `;
 
@@ -56,31 +68,16 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
 
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-  }
+export const Title = styled.text`
+  font-weight: bold;
+  font-size: 24px;
+  color: #444444;
+`;
 
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  input {
-    background: #ffffff;
-    border: 2px solid #dddddd;
-    border-radius: 4px;
-    height: 36px;
-    padding: 0 15px;
-    margin: 0 0 10px;
-    box-sizing: border-box;
-
-    border- &::placeholder {
-      color: rgba(255, 255, 255, 0.1);
-    }
-  }
+export const Component = styled.div`
+  display: flex;
 `;
 
 export const ButtonBack = styled.button`
@@ -88,12 +85,12 @@ export const ButtonBack = styled.button`
   align-items: center;
   justify-content: center;
   height: 36px;
-  width: 112px;
   color: #fff;
   background: #ccc;
   border-radius: 4px;
   border: 0;
   margin-right: 20px;
+  padding: 0 10px 0 10px;
 
   svg {
     display: flex;
@@ -103,7 +100,6 @@ export const ButtonBack = styled.button`
   }
 
   span {
-    padding-top: 2px;
     display: flex;
     font-size: 14px;
     font-weight: bold;

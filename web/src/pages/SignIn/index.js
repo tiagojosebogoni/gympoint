@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.svg';
 
 import { signInRequest } from '../../store/modules/auth/actions';
 
@@ -25,7 +25,7 @@ export default function SignIn() {
 
       <Form schema={schema} onSubmit={handleSubmit}>
         <span>SEU E-MAIL</span>
-        <Input name="email" type="email" placeholder="exemplo@gmail.com"/>
+        <Input name="email" type="email" placeholder="exemplo@gmail.com" />
 
         <span>SUA SENHA</span>
         <Input name="password" type="password" placeholder="*******" />

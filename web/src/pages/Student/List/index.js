@@ -1,30 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Input } from '@rocketseat/unform';
 import { MdAdd } from 'react-icons/md';
-
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { Header, ButtonConfirm } from '../Store/styles';
-import { Container } from './styles';
-
+import { Container, Title, PlansTable, Component } from './styles';
+import history from '../../../services/history';
 import api from '../../../services/api';
 
 export default function List() {
-  const useStyles = makeStyles({
-    root: {
-      width: '100%',
-      overflowX: 'auto',
-    },
-    table: {
-      minWidth: 650,
-    },
-  });
-
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -37,60 +19,50 @@ export default function List() {
     loadStudents();
   }, []);
 
-  const classes = useStyles();
-
   return (
     <Container>
       <Header>
-        <h2>Gerenciando alunos</h2>
-        <div>
-          <ButtonConfirm onClick={() => {}}>
-            <div>
-              <MdAdd />
-              <span>Cadastrar</span>
-            </div>
+        <Title>Gerenciando alunos</Title>
+        <Component>
+          <ButtonConfirm
+            type="button"
+            onClick={() => history.push(`/student/Store/0/I`)}
+          >
+            <MdAdd size={20} />
+            <span>CADASTRAR</span>
           </ButtonConfirm>
-
-          <Input name="find" placeholder="buscar aluno" />
-        </div>
+        </Component>
       </Header>
-      <div className="grid">
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>NOME</TableCell>
-              <TableCell>EMAIL</TableCell>
-              <TableCell>IDADE</TableCell>
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {students.map(student => (
-              <TableRow key={student.id}>
-                <TableCell component="th" scope="row">
-                  {student.name}
-                </TableCell>
-                <TableCell>{student.email}</TableCell>
-                <TableCell>{student.age}</TableCell>
-                <TableCell>
-                  <Link className="edit" to={`/Student/Store/${student.id}/M`}>
-                    Editar
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <Link
-                    className="delete"
-                    to={`/Student/Store/${student.id}/D`}
-                  >
-                    Excluir
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <PlansTable>
+        <thead>
+          <tr>
+            <th>NOME</th>
+            <th>E-MAIL</th>
+            <th>IDADE</th>
+            <th />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {students.map(student => (
+            <tr>
+              <td>{student.name}</td>
+              <td>{student.email}</td>
+              <td>{student.age}</td>
+              <td>
+                <Link className="edit" to={`/student/Store/${student.id}/U`}>
+                  editar
+                </Link>
+              </td>
+              <td>
+                <Link className="remove" to={`/student/Store/${student.id}/D`}>
+                  apagar
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </PlansTable>
     </Container>
   );
 }
