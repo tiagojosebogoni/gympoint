@@ -4,10 +4,32 @@ import pt from 'date-fns/locale/pt';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 import Register from '../models/Register';
+import User from '../models/User';
 
 import Mail from '../../lib/Mail';
 
 class RegisterController {
+  async index(req, res) {
+    const registers = await Register.findAll({
+      include: [
+        {
+          model: User,
+          as: 'student',
+          attributes: ['name'],
+        },
+
+        {
+          model: Plan,
+          as: 'plan',
+          attributes: ['title'],
+        },
+      ],
+    });
+
+    console.log(JSON.stringify(registers));
+    return res.json(registers);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date(),

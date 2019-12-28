@@ -12,7 +12,7 @@ export default function Header() {
         <Menu>
           <Link to="/student/list">ALUNOS</Link>
           <Link to="/plan/list">PLANOS</Link>
-          <Link to="/">MATRÍCULA</Link>
+          <Link to="/register/list">MATRÍCULA</Link>
           <Link to="/">PEDIDO DE AUXÍLIO</Link>
         </Menu>
       </Content>
