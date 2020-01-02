@@ -5,7 +5,6 @@ import { Header, ButtonConfirm } from '../Store/styles';
 import { Container, Title, PlansTable, Component } from './styles';
 import history from '../../../services/history';
 import api from '../../../services/api';
-import 
 
 export default function List() {
   const [registers, setRegisters] = useState([]);

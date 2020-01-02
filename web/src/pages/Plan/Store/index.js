@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 
@@ -13,8 +13,8 @@ import {
   Fields,
   Field,
 } from './styles';
-import api from '../../../services/api';
-import history from '../../../services/history';
+// import api from '../../../services/api';
+// import history from '../../../services/history';
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Título é obrigatório'),
@@ -24,61 +24,33 @@ const schema = Yup.object().shape({
     .integer()
     .required(),
 });
-export default function Store({ match, ...props }) {
-  const { id, mode } = match.params;
+export default function Store({ history }) {
+  const [priceFinal, setPriceFinal] = useState('');
+  console.log(history);
 
-  const [plan, setPlan] = useState('');
+  const { plan } = history.location.state;
 
-  useEffect(() => {
-    async function getPlan() {
-      const response = await api.get(`plans/${id}`);
-      const { duration } = response.data;
-      const { price } = response.data;
+  useMemo(() => {
+    setPriceFinal(plan.id > 0 ? plan.duration * plan.price : 0);
+  }, [plan]);
 
-      const planFormatted = {
-        title: response.data.title,
-        duration: response.data.duration,
-        priceFormatted: `R$${response.data.price}`,
-        priceTotalFormatted: `R$${price * duration}`,
-      };
-      setPlan(planFormatted);
-    }
+  function handleSubmit() {}
 
-    getPlan();
-  }, [id]);
-
-  let text = '';
-  switch (mode) {
-    case 'I':
-      text = 'Cadastro plano';
-      break;
-    case 'D':
-      text = 'Excluir plano';
-      break;
-    default:
-      text = 'Edição plano';
-  }
-
-  async function handleSubmit(data) {
-    if (mode === 'U') {
-      const response = await api.put(`plans/${id}`, data);
-      setPlan(response.data);
-    } else if (mode === 'I') {
-      const response = await api.post(`plans`, data);
-      setPlan(response.data);
-    } else if (mode === 'D') {
-      // await api.delete(`plans/${id}`, data);
-      history.go(-1);
-    }
+  function handleBack() {
+    history.push('/plan/list');
   }
 
   return (
     <Container>
-      <Form initialData={plan} onSubmit={handleSubmit}>
+      <Form initialData={plan} onSubmit={handleSubmit} schema={schema}>
         <Header>
-          <Title>{text}</Title>
+          <Title>{plan.id > 0 ? 'Edição de plano' : 'Cadastro de plano'}</Title>
           <Component>
-            <ButtonBack>
+            <ButtonBack
+              onClick={() => {
+                handleBack();
+              }}
+            >
               <MdKeyboardArrowLeft size={20} />
               <span>VOLTAR</span>
             </ButtonBack>
@@ -99,15 +71,29 @@ export default function Store({ match, ...props }) {
           <div>
             <Field>
               <span>DURAÇÃO (em meses)</span>
-              <Input name="duration" />
+              <Input
+                name="duration"
+                type="number"
+                placeholder="0"
+                pattern="[0-9]+([,\.][0-9]+)?"
+                min="0"
+                max="12"
+                step="any"
+              />
             </Field>
             <Field>
               <span>PREÇO MENSAL</span>
-              <Input name="priceFormatted" />
+              <Input
+                name="price"
+                type="number"
+                placeholder="0"
+                pattern="[0-9]+([,\.][0-9]+)?"
+                min="0"
+              />
             </Field>
             <Field>
               <span>PREÇO TOTAL</span>
-              <Input name="priceTotalFormatted" readOnly />
+              <Input name="priceTotalFormatted" value={priceFinal} readOnly />
             </Field>
           </div>
         </Fields>

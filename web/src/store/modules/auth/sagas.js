@@ -1,17 +1,37 @@
-import { takeLatest, call, all, put } from 'redux-saga/effects';
-import { signInSuccess } from './actions';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 import history from '../../../services/history';
 import api from '../../../services/api';
 
+import { signInSucess, signFailure } from './actions';
+
 export function* signIn({ payload }) {
-  const { email, password } = payload;
+  try {
+    const { email, password } = payload;
 
-  const response = yield call(api.post, 'sessions', { email, password });
+    const response = yield call(api.post, 'sessions', {
+      email,
+      password,
+    });
 
-  const { token, user } = response.data;
+    const { name } = response.data.user;
 
-  yield put(signInSuccess(token, user));
-  history.push('/Student/list');
+    const { token } = response.data;
+
+    if (!token) {
+      toast.error('Usuario não é Administrador');
+      return;
+    }
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    yield put(signInSucess(token, name));
+
+    history.push('/students');
+  } catch (err) {
+    toast.error('Falha na autenticação, verifique o seus dados!');
+    yield put(signFailure());
+  }
 }
 
 export function setToken({ payload }) {
@@ -24,7 +44,12 @@ export function setToken({ payload }) {
   }
 }
 
+export function signOut() {
+  history.push('/');
+}
+
 export default all([
-  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('persist/REHYDRATE', setToken),
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_OUT', signOut),
 ]);

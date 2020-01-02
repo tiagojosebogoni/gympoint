@@ -22,7 +22,7 @@ export default function Routes() {
         component={StoreStudent}
       />
       <Route path="/Student/list" isPrivate component={ListStudent} />
-      <Route path="/plan/store/:id/:mode" isPrivate component={StorePlan} />
+      <Route path="/plan/store" isPrivate component={StorePlan} />
       <Route path="/Plan/list" isPrivate component={ListPlan} />
       <Route path="/Register/list/" isPrivate component={RegisterList} />
       <Route path="/Register/store/:id" isPrivate component={RegisterStore} />
