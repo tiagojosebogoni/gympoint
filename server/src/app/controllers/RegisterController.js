@@ -24,9 +24,9 @@ class RegisterController {
           attributes: ['title'],
         },
       ],
+      atributes: ['id', 'start_date', 'end_date', 'price', 'active'],
     });
 
-    console.log(JSON.stringify(registers));
     return res.json(registers);
   }
 
