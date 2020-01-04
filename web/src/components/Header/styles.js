@@ -54,11 +54,10 @@ export const Profile = styled.div`
       color: #333;
     }
 
-    a {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      color: #fb6f91;
+    button {
+      border: 0;
+      background: none;
+      color: #de3b3b;
     }
   }
 `;

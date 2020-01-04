@@ -72,13 +72,18 @@ export const PlansTable = styled.table`
       background: #ffffff;
 
       .edit {
+        border: 0;
+        background: none;
         color: #4d85ee;
         font-size: 15px;
       }
       .remove {
+        border: 0;
+        background: none;
         color: #de3b3b;
         font-size: 15px;
       }
+    }
     }
 
     + tr td {

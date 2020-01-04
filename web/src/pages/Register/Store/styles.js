@@ -62,6 +62,21 @@ export const Field = styled.div`
     font-size: 14px;
     color: #444444;
   }
+
+  select {
+    background: #fff;
+    border: 2px solid #dddddd;
+    color: #666666;
+    border-radius: 4px;
+    height: 44px;
+    padding: 0 15px;
+    margin: 0 0 10px;
+    box-sizing: border-box;
+
+    border- &::placeholder {
+      color: rgba(255, 255, 255, 0.1);
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -73,7 +88,7 @@ export const Header = styled.div`
 export const Title = styled.text`
   font-weight: bold;
   font-size: 24px;
-  color:#444444;
+  color: #444444;
 `;
 
 export const Component = styled.div`

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { MdAdd, MdCheckCircle } from 'react-icons/md';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import { Header, ButtonConfirm } from '../Store/styles';
 import { Container, Title, PlansTable, Component } from './styles';
 import history from '../../../services/history';
@@ -9,15 +12,59 @@ import api from '../../../services/api';
 export default function List() {
   const [registers, setRegisters] = useState([]);
 
+  const MySwal = withReactContent(Swal);
+
   useEffect(() => {
     async function load() {
-      const response = await api.get('registers');
+      const { data } = await api.get('registers');
 
-      setRegisters(response.data);
+      const date = data.map(d => {
+        const dateStart = format(
+          parseISO(d.start_date),
+          "dd 'de' MMMM 'de' yyyy",
+          {
+            locale: pt,
+          }
+        );
+        const dateEnd = format(parseISO(d.end_date), "dd 'de' MMMM 'de' yyyy", {
+          locale: pt,
+        });
+
+        return {
+          ...d,
+          dateStart,
+          dateEnd,
+        };
+      });
+
+      setRegisters(date);
     }
-
     load();
   }, []);
+
+  function handleEdit(register) {
+    history.push({
+      pathname: '/register/Store',
+      state: { store: false, register },
+    });
+  }
+
+  function handleDelete(id) {
+    MySwal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sim, excluir!',
+    }).then(result => {
+      if (result.value) {
+        MySwal.fire('Exclusão!', 'A Matrícula será cancelada.', 'success');
+      }
+    });
+  }
 
   return (
     <Container>
@@ -49,19 +96,32 @@ export default function List() {
           {registers.map(register => (
             <tr>
               <td>{register.student.name}</td>
-              <td>{register.plan.title}</td>
-              <td />
-              <td />
-              <td />
+              <td>{register.plan ? register.plan.title : ''}</td>
+              <td>{register.dateStart}</td>
+              <td>{register.dateEnd}</td>
               <td>
-                <Link className="edit" to={`/plan/Store/${register.id}/U`}>
-                  editar
-                </Link>
+                <MdCheckCircle
+                  size={20}
+                  color={register.active ? '#42CB59' : '#ddd'}
+                />
               </td>
               <td>
-                <Link className="remove" to={`/plan/Store/${register.id}/D`}>
+                <button
+                  className="edit"
+                  type="button"
+                  onClick={() => handleEdit(register)}
+                >
+                  editar
+                </button>
+              </td>
+              <td>
+                <button
+                  className="remove"
+                  type="button"
+                  onClick={() => handleDelete(register.id)}
+                >
                   apagar
-                </Link>
+                </button>
               </td>
             </tr>
           ))}
