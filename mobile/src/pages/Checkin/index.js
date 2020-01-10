@@ -12,19 +12,15 @@ export default function Checkins(props) {
 
   useEffect(() => {
     async function loadCheckin() {
-      const response = await api.get(`/students/${5}/checkins`);
+      /* const response = await api.get(`/students/${5}/checkins`);
 
-      setCheckins(response.data.rows);
+      setCheckins(response.data.rows); */
     }
 
     loadCheckin();
   }, []);
 
-  async function handleAddCheckin() {
-    try {
-      const response = await api.post(`/students/${5}/checkins`);
-    } catch (e) {}
-  }
+  async function handleAddCheckin() {}
   const data = [1, 2, 3, 4, 5];
   return (
     <Container>

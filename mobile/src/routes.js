@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import SignIn from './pages/SignIn';
 import CheckIn from './pages/Checkin';
+import HelpOrder from './pages/HelpOrder';
 
 const Routes = createSwitchNavigator(
   {
@@ -10,12 +11,13 @@ const Routes = createSwitchNavigator(
     App: createBottomTabNavigator(
       {
         CheckIn,
+        HelpOrder,
       },
       {
         tabBarOptions: {
           keyboardHidesTabBar: true,
           activeTintColor: '#ee4e62',
-          inactiveTintColor: 'rgba(255,255,255,0.6)',
+          inactiveBackgroundColor: 'rgba(255,255,255,0.1)',
         },
       }
     ),
