@@ -18,3 +18,7 @@ export default function New() {
     </Container>
   );
 }
+
+New.navigationOptions = {
+  title: '',
+};

@@ -18,9 +18,11 @@ const Routes = createSwitchNavigator(
       {
         CheckIn,
 
-        HelpOrder,
-        New,
-        Answer,
+        screen: createStackNavigator({
+          HelpOrder,
+          New,
+          Answer,
+        }),
       },
       {
         tabBarOptions: {

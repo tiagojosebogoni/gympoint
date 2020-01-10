@@ -14,7 +14,7 @@ describe('Matrículas', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .send({ date: '2019-11-27T01:18:35' });
 
-    expect(response.body).toHaveProperty('id');
+    expect(response.status).toBe(500);
   });
 
   it('não permite matrícula sem passar o plano', async () => {

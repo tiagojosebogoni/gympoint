@@ -9,26 +9,35 @@ import { Container, ListCheckin } from './styles';
 
 export default function Checkins(props) {
   const [checkins, setCheckins] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadCheckin() {
-      /* const response = await api.get(`/students/${5}/checkins`);
+      const response = await api.get(`/students/${5}/checkins`);
 
-      setCheckins(response.data.rows); */
+      setCheckins(response.data.rows);
     }
 
     loadCheckin();
   }, []);
 
-  async function handleAddCheckin() {}
-  const data = [1, 2, 3, 4, 5];
+  async function handleAddCheckin() {
+    setLoading(true);
+    const response = await api.post(`/students/5/checkins`);
+
+    setCheckins(response.data.rows);
+    setLoading(false);
+  }
+
   return (
     <Container>
-      <Button onPress={handleAddCheckin}>Novo Check-in</Button>
+      <Button loading={loading} onPress={handleAddCheckin}>
+        Novo Check-in
+      </Button>
       <ListCheckin
-        data={data}
+        data={checkins}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item, index }) => <Checkin />}
+        renderItem={({ item, index }) => <Checkin data={item} index={index} />}
       />
     </Container>
   );

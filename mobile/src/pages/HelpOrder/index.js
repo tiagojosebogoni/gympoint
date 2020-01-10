@@ -1,40 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Button from '../../components/Button';
+import Question from '../../components/Question';
+import api from '../../services/api';
 
-import {
-  Container,
-  SubmitButton,
-  ListHelpOrder,
-  Help,
-  HelpHeader,
-  Left,
-  HelpTitle,
-  HelpTime,
-  HelpQuestion,
-} from './styles';
+import { Container, ListHelpOrder } from './styles';
 
-export default function HelpOrder() {
-  const data = [1, 2, 3, 4, 5];
+export default function HelpOrder({ navigation }) {
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    async function loadQuestions() {
+      const response = await api.get('/students/1/help-orders');
+
+      setQuestions(response.data.rows);
+    }
+
+    loadQuestions();
+  }, []);
+
   return (
     <Container>
-      <SubmitButton>Novo pedido de auxílio</SubmitButton>
+      <Button onPress={() => navigation.navigate('New')}>
+        Novo pedido de auxílio
+      </Button>
       <ListHelpOrder
-        data={data}
+        data={questions}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item, index }) => (
-          <Help>
-            <HelpHeader>
-              <Left>
-                <Icon name="check-circle" size={20} color="#42cb59" />
-                <HelpTitle>Respondido</HelpTitle>
-              </Left>
-              <HelpTime>Hoje</HelpTime>
-            </HelpHeader>
-            <HelpQuestion>
-              Olá pessoal da academia, gostaria de saber se quando acordar devo
-              ingerir batata doce e frango logo de primeira, preparar as...
-            </HelpQuestion>
-          </Help>
+        renderItem={({ item }) => (
+          <Question data={item} navigation={navigation} />
         )}
       />
     </Container>

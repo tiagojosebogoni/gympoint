@@ -29,7 +29,8 @@ class App {
   }
 
   exceptionHandler() {
-    this.server.use(async (err, req, res, next) => {
+    /* this.server.use(async (err, req, res, next) => {
+      console.log(process.env.NODE_ENV);
       if (process.env.NODE_ENV === 'development') {
         const errors = await new Youch(err, req).toJSON();
 
@@ -38,6 +39,7 @@ class App {
 
       return res.status(500).json({ error: 'Internal server error' });
     });
+     */
   }
 }
 

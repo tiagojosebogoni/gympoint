@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { parseISO, formatRelative } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import {
   Container,
@@ -13,27 +15,29 @@ import {
   AnswerHelp,
 } from './styles';
 
-export default function Answer() {
+export default function Answer({ navigation }) {
+  const item = navigation.getParam('item');
+
+  const dateParsed = useMemo(() => {
+    return formatRelative(parseISO(item.createdAt), new Date(), {
+      locale: pt,
+      addSuffix: true,
+    });
+  }, []);
+
   return (
     <Container>
       <Question>
         <QuestionHeader>
           <QuestionTitle>Pergunta</QuestionTitle>
-          <QuestionTime>Hoje</QuestionTime>
+          <QuestionTime>{dateParsed}</QuestionTime>
         </QuestionHeader>
-        <QuestionHelp>
-          Olá pessoal da academia, gostaria de saber se quando acordar devo
-          ingerir batata doce e frango logo de primeira, preparar as marmitas e
-          lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?
-        </QuestionHelp>
+        <QuestionHelp>{item.question}</QuestionHelp>
       </Question>
       <AnswerQuestion>
         <AnswerHeader>
           <AnswerTitle>Resposta</AnswerTitle>
-          <AnswerHelp>
-            Opa, isso aí, duas em duas horas, não deixa pra depois, um monstro
-            treina como um, come como dois.
-          </AnswerHelp>
+          <AnswerHelp>{item.answer}</AnswerHelp>
         </AnswerHeader>
       </AnswerQuestion>
     </Container>
