@@ -26,7 +26,7 @@ export default function HelpOrder() {
             <HelpHeader>
               <Left>
                 <Icon name="check-circle" size={20} color="#42cb59" />
-                <HelpTitle>Sem Resposta</HelpTitle>
+                <HelpTitle>Respondido</HelpTitle>
               </Left>
               <HelpTime>Hoje</HelpTime>
             </HelpHeader>
@@ -42,7 +42,7 @@ export default function HelpOrder() {
 }
 
 HelpOrder.navigationOptions = {
-  tabBarLabel: 'Check-ins',
+  tabBarLabel: 'Pedir Aajuda',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="live-help" size={20} color={tintColor} />
   ),
