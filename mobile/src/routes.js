@@ -1,4 +1,6 @@
-import React from 'react-native';
+import React from 'react';
+import { View, Image } from 'react-native';
+
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -10,6 +12,7 @@ import CheckIn from './pages/Checkin';
 import HelpOrder from './pages/HelpOrder';
 import New from './pages/Question/New';
 import Answer from './pages/Question/Answer';
+import logo from './assets/logoMobile.png';
 
 const Routes = createSwitchNavigator(
   {
@@ -18,11 +21,21 @@ const Routes = createSwitchNavigator(
       {
         CheckIn,
 
-        screen: createStackNavigator({
-          HelpOrder,
-          New,
-          Answer,
-        }),
+        screen: createStackNavigator(
+          {
+            HelpOrder,
+            New,
+            Answer,
+          },
+          {
+            navigationOptions: () => ({
+              tabBarLabel: 'Pedir Ajuda',
+              tabBarIcon: ({ tintColor }) => (
+                <Icon name="live-help" size={20} color={tintColor} />
+              ),
+            }),
+          }
+        ),
       },
       {
         tabBarOptions: {

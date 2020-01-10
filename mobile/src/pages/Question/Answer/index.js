@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
+import { View, Image } from 'react-native';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import logo from '../../../assets/logoMobile.png';
 
 import {
   Container,
@@ -43,3 +45,12 @@ export default function Answer({ navigation }) {
     </Container>
   );
 }
+
+Answer.navigationOptions = {
+  title: '',
+  headerBackground: () => (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Image source={logo} />
+    </View>
+  ),
+};
