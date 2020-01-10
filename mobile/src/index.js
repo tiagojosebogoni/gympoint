@@ -1,9 +1,14 @@
 import React from 'react';
-import { Text } from 'react-native';
 import './config/ReactotronConfig';
+import { StatusBar } from 'react-native';
 
-// import { Container } from './styles';
+import Routes from './routes';
 
-export default function src() {
-  return <Text>bbb</Text>;
+export default function App() {
+  return (
+    <>
+      <StatusBar barStyle="light-content" />
+      <Routes />
+    </>
+  );
 }
