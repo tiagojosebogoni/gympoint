@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import logo from '../../assets/logoMobile.png';
 
 import Button from '../../components/Button';
@@ -11,14 +11,17 @@ import { Container, ListHelpOrder } from './styles';
 
 export default function HelpOrder({ navigation }) {
   const [questions, setQuestions] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function loadQuestions() {
+    setRefreshing(true);
+    const response = await api.get('/students/1/help-orders');
+
+    setQuestions(response.data.rows);
+    setRefreshing(false);
+  }
 
   useEffect(() => {
-    async function loadQuestions() {
-      const response = await api.get('/students/1/help-orders');
-
-      setQuestions(response.data.rows);
-    }
-
     loadQuestions();
   }, []);
 
@@ -30,6 +33,8 @@ export default function HelpOrder({ navigation }) {
       <ListHelpOrder
         data={questions}
         keyExtractor={item => String(item.id)}
+        refreshing={refreshing}
+        onRefresh={loadQuestions}
         renderItem={({ item }) => (
           <Question data={item} navigation={navigation} />
         )}
@@ -54,3 +59,9 @@ HelpOrder.navigationOptions = {
     <Icon name="live-help" size={20} color={tintColor} />
   ),
 }; */
+
+HelpOrder.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/tiago/Projetos/gympoint/server/package.json: Unexpected token / in JSON at position 299
+  SyntaxError: /home/tiago/Projetos/gympoint/server/package.json: Unexpected token / in JSON at position 298
       at JSON.parse (<anonymous>)
       at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
       at Generator.next (<anonymous>)
@@ -31,7 +31,7 @@ npm manifest:
       "dev": "nodemon src/server.js",
       "build": "sucrase ./src -d ./dist --transforms imports",
       "pretest": "NODE_ENV=test sequelize db:migrate",
-      "test": "NODE_ENV=test jest -i",
+      "test": "NODE_ENV=test jest -i"
       //"posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
     },
     "dependencies": {
