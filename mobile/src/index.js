@@ -1,14 +1,19 @@
 import React from 'react';
-import './config/ReactotronConfig';
 import { StatusBar } from 'react-native';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 
-import Routes from './routes';
+import './config/ReactotronConfig';
+import { store, persistor } from './store';
+import App from './App';
 
-export default function App() {
+export default function index() {
   return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <Routes />
-    </>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <StatusBar barStyle="light-content" />
+        <App />
+      </PersistGate>
+    </Provider>
   );
 }

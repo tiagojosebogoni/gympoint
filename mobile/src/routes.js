@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Image } from 'react-native';
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -12,43 +11,43 @@ import CheckIn from './pages/Checkin';
 import HelpOrder from './pages/HelpOrder';
 import New from './pages/Question/New';
 import Answer from './pages/Question/Answer';
-import logo from './assets/logoMobile.png';
 
-const Routes = createSwitchNavigator(
-  {
-    Sign: SignIn,
-    App: createBottomTabNavigator(
+export default (signedIn = false) =>
+  createAppContainer(
+    createSwitchNavigator(
       {
-        CheckIn,
-
-        screen: createStackNavigator(
+        Sign: SignIn,
+        App: createBottomTabNavigator(
           {
-            HelpOrder,
-            New,
-            Answer,
+            CheckIn,
+
+            screen: createStackNavigator(
+              {
+                HelpOrder,
+                New,
+                Answer,
+              },
+              {
+                navigationOptions: () => ({
+                  tabBarLabel: 'Pedir Ajuda',
+                  tabBarIcon: ({ tintColor }) => (
+                    <Icon name="live-help" size={20} color={tintColor} />
+                  ),
+                }),
+              }
+            ),
           },
           {
-            navigationOptions: () => ({
-              tabBarLabel: 'Pedir Ajuda',
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name="live-help" size={20} color={tintColor} />
-              ),
-            }),
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+              activeTintColor: '#ee4e62',
+              inactiveBackgroundColor: 'rgba(255,255,255,0.1)',
+            },
           }
         ),
       },
       {
-        tabBarOptions: {
-          keyboardHidesTabBar: true,
-          activeTintColor: '#ee4e62',
-          inactiveBackgroundColor: 'rgba(255,255,255,0.1)',
-        },
+        initialRouteName: 'Sign', // signedIn ? 'App' : 'Sign',
       }
-    ),
-  },
-  {
-    initialRouteName: 'Sign',
-  }
-);
-
-export default createAppContainer(Routes);
+    )
+  );

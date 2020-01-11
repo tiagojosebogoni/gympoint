@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '../../services/api';
@@ -8,25 +10,35 @@ import Checkin from '../../components/Checkin';
 import { Container, ListCheckin } from './styles';
 
 export default function Checkins(props) {
+  const id = useSelector(state => state.auth.id);
   const [checkins, setCheckins] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  async function loadCheckin() {
+    setLoading(true);
+    const response = await api.get(`/students/${id}/checkins`);
+
+    setCheckins(response.data.rows);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function loadCheckin() {
-      const response = await api.get(`/students/${5}/checkins`);
-
-      setCheckins(response.data.rows);
-    }
-
     loadCheckin();
   }, []);
 
   async function handleAddCheckin() {
     setLoading(true);
-    const response = await api.post(`/students/5/checkins`);
 
-    setCheckins(response.data.rows);
-    setLoading(false);
+    await api.post(`/students/${id}/checkins`).catch(function(error) {
+      if (error.response) {
+        const erro = error.response.data.error;
+        Alert.alert('Erro de sistema', `${erro}.`);
+      }
+
+      loadCheckin();
+
+      setLoading(false);
+    });
   }
 
   return (
@@ -35,6 +47,7 @@ export default function Checkins(props) {
         Novo Check-in
       </Button>
       <ListCheckin
+        loading={loading}
         data={checkins}
         keyExtractor={item => String(item.id)}
         renderItem={({ item, index }) => <Checkin data={item} index={index} />}
