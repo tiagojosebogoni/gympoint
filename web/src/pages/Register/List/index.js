@@ -73,7 +73,7 @@ export default function List() {
         <Component>
           <ButtonConfirm
             type="button"
-            onClick={() => history.push(`/register/Store/0/I`)}
+            onClick={() => history.push(`/register/store/`)}
           >
             <MdAdd size={20} />
             <span>CADASTRAR</span>

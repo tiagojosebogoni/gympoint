@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import StudentController from './app/controllers/StudentController';
@@ -16,7 +17,7 @@ routes.post('/sessions', SessionController.store);
 routes.post('/students/:student_id/checkins', CheckinController.store);
 routes.get('/students/:student_id/checkins', CheckinController.index);
 routes.post('/students/:student_id/help-orders', HelpOrder.store);
-routes.get('/students/:student_id/help-orders', HelpOrder.index);
+routes.get('/students/:student_id/help-orders', HelpOrder.show);
 routes.get('/students/:id', StudentController.index);
 
 routes.use(authMiddleware);
@@ -41,9 +42,10 @@ routes.put(
 );
 routes.delete('/register/:id', RegisterController.delete);
 
-routes.get('/help-orders', ResponderController.indexAll);
-//routes.get('/students/:student_id/help-orders', ResponderController.index);
+// routes.get('/help-orders', ResponderController.indexAll);
+// routes.get('/students/:student_id/help-orders', ResponderController.index);
 routes.post('/help-orders/:id/answer', ResponderController.store);
+routes.get('/help-orders', HelpOrder.index);
 
 // ////////////////////////////////////////
 routes.get('/dashboard', (req, res) => {

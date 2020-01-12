@@ -13,12 +13,14 @@ import {
 } from './styles';
 
 export default function Question({ data, navigation }) {
+  const date = data.answer_at === null ? data.createdAt : data.answer_at;
+
   const dateParsed = useMemo(() => {
-    return formatRelative(parseISO(data.createdAt), new Date(), {
+    return formatRelative(parseISO(date), new Date(), {
       locale: pt,
       addSuffix: true,
     });
-  }, []);
+  }, [date]);
 
   function handleAnswer(item) {
     if (item.answer !== null) {
@@ -41,6 +43,7 @@ export default function Question({ data, navigation }) {
         </Left>
         <HelpTime>{dateParsed}</HelpTime>
       </HelpHeader>
+
       <HelpQuestion>{data.question}</HelpQuestion>
     </Container>
   );

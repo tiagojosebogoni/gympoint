@@ -10,6 +10,7 @@ import StorePlan from '../pages/Plan/Store';
 import ListPlan from '../pages/Plan/List';
 import RegisterStore from '../pages/Register/Store';
 import RegisterList from '../pages/Register/List';
+import HelpOrder from '../pages/HelpOrder';
 
 export default function Routes() {
   return (
@@ -26,6 +27,7 @@ export default function Routes() {
       <Route path="/Plan/list" isPrivate component={ListPlan} />
       <Route path="/Register/list/" isPrivate component={RegisterList} />
       <Route path="/Register/store" isPrivate component={RegisterStore} />
+      <Route path="/helpOrder" isPrivate component={HelpOrder} />
       <Route path="/" component={() => <h1>404</h1>} />
     </Switch>
   );

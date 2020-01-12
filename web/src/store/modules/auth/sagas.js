@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
-import history from '../../../services/history';
-import api from '../../../services/api';
+import history from '~/services/history';
+import api from '~/services/api';
 
 import { signInSucess, signFailure } from './actions';
 
@@ -15,7 +15,7 @@ export function* signIn({ payload }) {
     });
 
     const { name } = response.data.user;
-
+    console.log(`>>>>${JSON.stringify(response)}`);
     const { token } = response.data;
 
     if (!token) {
@@ -36,7 +36,7 @@ export function* signIn({ payload }) {
 
 export function setToken({ payload }) {
   if (!payload) return;
-
+  console.log(`......${JSON.stringify(payload)}`);
   const { token } = payload.auth;
 
   if (token) {

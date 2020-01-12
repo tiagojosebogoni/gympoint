@@ -1,11 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 import { useField } from '@rocketseat/unform';
 
-import { Select } from './styles';
-
-export default function ReactSelect({ name, options, multiple, ...rest }) {
+export default function ReactSelect({
+  name,
+  label,
+  options,
+  multiple,
+  ...rest
+}) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
@@ -42,9 +47,9 @@ export default function ReactSelect({ name, options, multiple, ...rest }) {
 
   return (
     <>
+      {label && <label htmlFor={fieldName}>{label}</label>}
+
       <Select
-        className="react-select-container"
-        classNamePrefix="react-select"
         name={fieldName}
         aria-label={fieldName}
         options={options}
@@ -60,13 +65,3 @@ export default function ReactSelect({ name, options, multiple, ...rest }) {
     </>
   );
 }
-
-ReactSelect.propTypes = {
-  name: PropTypes.string.isRequired,
-    options: PropTypes.array.isRequired, // eslint-disable-line
-  multiple: PropTypes.bool,
-};
-
-ReactSelect.defaultProps = {
-  multiple: false,
-};

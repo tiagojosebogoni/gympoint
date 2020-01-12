@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import AuthLayout from '../pages/_layouts/auth';
-import DefaultLayout from '../pages/_layouts/default';
+import AuthLayout from '~/pages/_layouts/auth';
+import DefaultLayout from '~/pages/_layouts/default';
 
-import { store } from '../store';
+import { store } from '~/store';
 
 export default function RouteWrapper({
   component: Component,
@@ -13,13 +13,13 @@ export default function RouteWrapper({
   ...rest
 }) {
   const { signed } = store.getState().auth;
-
+  console.log(`signed:${JSON.stringify(store)}`);
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/student/list" />;
+    return <Redirect to="/students/list" />;
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;

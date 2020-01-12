@@ -13,7 +13,7 @@ import {
   Fields,
   Field,
 } from './styles';
-// import api from '../../../services/api';
+import api from '../../../services/api';
 // import history from '../../../services/history';
 
 const schema = Yup.object().shape({
@@ -26,7 +26,6 @@ const schema = Yup.object().shape({
 });
 export default function Store({ history }) {
   const [priceFinal, setPriceFinal] = useState('');
-  console.log(history);
 
   const { plan } = history.location.state;
 
@@ -34,7 +33,9 @@ export default function Store({ history }) {
     setPriceFinal(plan.id > 0 ? plan.duration * plan.price : 0);
   }, [plan]);
 
-  function handleSubmit() {}
+  async function handleSubmit(data) {
+    await api.post('/plans', data);
+  }
 
   function handleBack() {
     history.push('/plan/list');

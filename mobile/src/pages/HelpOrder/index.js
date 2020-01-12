@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import PropTypes from 'prop-types';
-import logo from '../../assets/logoMobile.png';
+import { useSelector } from 'react-redux';
 
+import logo from '../../assets/logoMobile.png';
 import Button from '../../components/Button';
 import Question from '../../components/Question';
 import api from '../../services/api';
@@ -12,12 +13,13 @@ import { Container, ListHelpOrder } from './styles';
 export default function HelpOrder({ navigation }) {
   const [questions, setQuestions] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const id = useSelector(state => state.auth.id);
 
   async function loadQuestions() {
     setRefreshing(true);
-    const response = await api.get('/students/1/help-orders');
+    const response = await api.get(`/students/${id}/help-orders`);
 
-    setQuestions(response.data.rows);
+    setQuestions(response.data.helpOrders);
     setRefreshing(false);
   }
 

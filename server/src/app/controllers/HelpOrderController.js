@@ -3,15 +3,31 @@ import * as Yup from 'yup';
 import HelpOrder from '../models/Help_Order';
 import Student from '../models/Student';
 
-class PlanController {
+class HelpOrderController {
   async index(req, res) {
-    const { student_id } = req.params;
+    const { page = 1 } = req.query;
 
-    const helpOrder = await HelpOrder.findAndCountAll({
-      where: { student_id },
+    const { count, rows } = await HelpOrder.findAndCountAll({
+      where: {
+        answer_at: null,
+      },
+      limit: 20,
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
-    return res.json(helpOrder);
+    return res.json({
+      total: count,
+      page,
+      perPage: 20,
+      helpOrders: rows,
+    });
   }
 
   async store(req, res) {
@@ -38,6 +54,40 @@ class PlanController {
 
     return res.json(helpOrder).send();
   }
+
+  async show(req, res) {
+    const { student_id } = req.params;
+    const { page = 1 } = req.query;
+
+    const student = await Student.findByPk(student_id);
+
+    if (!student) {
+      return res.status(400).json({ error: 'Aluno não encontrado.' });
+    }
+
+    const { count, rows } = await HelpOrder.findAndCountAll({
+      where: {
+        student_id,
+      },
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
+
+    return res.json({
+      total: count,
+      page,
+      perPage: 10,
+      helpOrders: rows,
+    });
+  }
 }
 
-export default new PlanController();
+export default new HelpOrderController();
