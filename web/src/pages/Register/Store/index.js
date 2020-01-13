@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Form } from '@rocketseat/unform';
+import React, { useState, useEffect } from 'react';
+import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 import * as Yup from 'yup';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
+
 import { toast } from 'react-toastify';
 import { addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import DatePicker from '../../../components/DatePicker';
 import Select from '../../../components/Select';
-import Input from '../../../components/Input';
+import TCurrencyFormat from '../../../components/CurrencyFormat';
 
 import {
   Container,
@@ -118,7 +118,7 @@ export default function Store() {
   }
 
   async function handleSubmit(data) {
-    setRegister(data);
+    /* setRegister(data);
     try {
       const { student_id, plan_id, start_date } = data;
 
@@ -126,7 +126,8 @@ export default function Store() {
       toast.success(`Matrícula realizada com sucesso.`);
     } catch (e) {
       toast.error(`Não foi possível cadastrar a matrícula. ${e}`);
-    }
+    } */
+    console.log(data);
   }
 
   return (
@@ -178,14 +179,13 @@ export default function Store() {
               disabled
               selected={endDate}
             />
-            <Field>
-              <Input
-                label="PRECO TOTAL"
-                name="priceFinal"
-                value={priceTotal}
-                readOnly
-              />
-            </Field>
+
+            <TCurrencyFormat
+              label="PRECO TOTAL"
+              name="priceFinal"
+              value={priceTotal}
+              disabled
+            />
           </Field>
         </Fields>
       </Form>

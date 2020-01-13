@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
 import {
@@ -13,8 +14,9 @@ import {
   Fields,
   Field,
 } from './styles';
+
 import api from '../../../services/api';
-// import history from '../../../services/history';
+import TCurrencyFormat from '../../../components/CurrencyFormat';
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Título é obrigatório'),
@@ -25,16 +27,37 @@ const schema = Yup.object().shape({
     .required(),
 });
 export default function Store({ history }) {
-  const [priceFinal, setPriceFinal] = useState('');
+  const [priceTotal, setPriceTotal] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   const { plan } = history.location.state;
 
-  useMemo(() => {
-    setPriceFinal(plan.id > 0 ? plan.duration * plan.price : 0);
+  useEffect(() => {
+    if (plan) {
+      setDuration(plan.duration);
+      setPrice(plan.price);
+    }
   }, [plan]);
 
-  async function handleSubmit(data) {
-    await api.post('/plans', data);
+  useEffect(() => {
+    setPriceTotal(duration * price);
+  }, [duration, price]);
+
+  async function handleSubmit({ title }) {
+    const data = { title, duration, price };
+
+    try {
+      if (plan.id > 0) {
+        await api.put(`/plans/${plan.id}`, data);
+        toast.success(`Plano cadastrado com sucesso.`);
+      } else {
+        await api.post('/plans', data);
+        toast.success(`Plano alterado com sucesso.`);
+      }
+    } catch (e) {
+      toast.error(`Erro ao criar/atualizar plano. ${e}`);
+    }
   }
 
   function handleBack() {
@@ -43,7 +66,7 @@ export default function Store({ history }) {
 
   return (
     <Container>
-      <Form initialData={plan} onSubmit={handleSubmit} schema={schema}>
+      <Form initialData={plan} onSubmit={handleSubmit}>
         <Header>
           <Title>{plan.id > 0 ? 'Edição de plano' : 'Cadastro de plano'}</Title>
           <Component>
@@ -71,30 +94,36 @@ export default function Store({ history }) {
 
           <div>
             <Field>
-              <span>DURAÇÃO (em meses)</span>
-              <Input
+              <TCurrencyFormat
+                label="DURAÇÃO (em meses)"
                 name="duration"
-                type="number"
-                placeholder="0"
-                pattern="[0-9]+([,\.][0-9]+)?"
-                min="0"
-                max="12"
-                step="any"
+                format="##"
+                value={duration}
+                onValueChange={values => {
+                  const { value } = values;
+
+                  setDuration(value);
+                }}
               />
             </Field>
             <Field>
-              <span>PREÇO MENSAL</span>
-              <Input
+              <TCurrencyFormat
+                label="PREÇO MENSAL"
                 name="price"
-                type="number"
-                placeholder="0"
-                pattern="[0-9]+([,\.][0-9]+)?"
-                min="0"
+                value={price}
+                onValueChange={values => {
+                  const { value } = values;
+                  setPrice(value);
+                }}
               />
             </Field>
             <Field>
-              <span>PREÇO TOTAL</span>
-              <Input name="priceTotalFormatted" value={priceFinal} readOnly />
+              <TCurrencyFormat
+                label="PREÇO TOTAL"
+                name="priceTotal"
+                value={priceTotal}
+                disabled
+              />
             </Field>
           </div>
         </Fields>
