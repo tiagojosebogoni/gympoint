@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { Input } from '@rocketseat/unform';
 
 export const Container = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
+  flex: 1;
 
   > label {
     font-family: Roboto;
@@ -13,7 +14,11 @@ export const Container = styled.div`
     font-weight: bold;
     margin: 20px 0 20px 0;
   }
-  input {
-    font-size: 28px;
-  }
+`;
+
+export const TInput = styled(Input)`
+  font-family: Roboto-Regular;
+  font-size: 16px;
+  color: #999999;
+  text-align: left;
 `;

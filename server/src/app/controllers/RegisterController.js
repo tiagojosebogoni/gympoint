@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { addMonths, format } from 'date-fns';
+import { parseISO, addMonths, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
@@ -32,41 +32,47 @@ class RegisterController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      date: Yup.date(),
+      start_date: Yup.date().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Campos obrigatórios' });
+      return res
+        .status(400)
+        .json({ error: `Campos obrigatórios ${JSON.stringify(req.body)}` });
     }
 
-    const { date } = req.body;
-    const { idStudent, idPlan } = req.params;
+    const { student_id, plan_id, start_date } = req.body;
+    const formattedDateStart = parseISO(start_date);
 
-    const student = await Student.findByPk(idStudent);
+    const student = await Student.findByPk(student_id);
     if (!student) {
       return res.status(401).json({ error: 'Aluno não encontrado' });
     }
 
-    const plan = await Plan.findByPk(idPlan);
+    const plan = await Plan.findByPk(plan_id);
     if (!plan) {
       return res.status(401).json({ error: 'Plano não encontrado' });
     }
 
-    const start_date = new Date(date);
-    const end_date = addMonths(start_date, plan.duration);
+    const end_date = addMonths(formattedDateStart, plan.duration);
     const price = plan.price * plan.duration;
 
     const register = await Register.create({
-      start_date,
+      start_date: formattedDateStart,
       end_date,
       price,
-      plan_id: plan.id,
-      student_id: student.id,
+      plan_id,
+      student_id,
     });
 
-    const dateStartFomatted = format(start_date, "dd 'de' MMMM 'de' yyyy'", {
-      locale: pt,
-    });
+    const dateStartFomatted = format(
+      formattedDateStart,
+      "dd 'de' MMMM 'de' yyyy'",
+      {
+        locale: pt,
+      }
+    );
+
     const dateEndFomatted = format(end_date, "dd 'de' MMMM 'de' yyyy'", {
       locale: pt,
     });

@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input } from '@rocketseat/unform';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Form } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
 import * as Yup from 'yup';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import { toast } from 'react-toastify';
 import { addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import DatePicker from '../../../components/DatePicker';
 import Select from '../../../components/Select';
+import Input from '../../../components/Input';
 
 import {
   Container,
@@ -67,6 +69,18 @@ export default function Store() {
   }, []);
 
   useEffect(() => {
+    if (!plan) return;
+
+    setPriceTotal(plan.month * plan.price);
+  }, [plan]);
+
+  useEffect(() => {
+    if (!plan || !startDate) return;
+
+    setEndDate(addMonths(startDate, plan.month));
+  }, [plan, startDate]);
+
+  useEffect(() => {
     async function loadPlans() {
       const { data } = await api.get('plans/0');
 
@@ -85,119 +99,94 @@ export default function Store() {
     loadPlans();
   }, []);
 
-  function handleDateClick(option) {
-    setStartDate(option);
-
-    setEndDate(addMonths(startDate, duration));
-    console.log(endDate, duration);
+  function handleStartDate(date) {
+    setStartDate(date);
   }
 
-  function handleOptionChange(option, { name }) {
-    if (!option || !name) return;
-    console.log(option);
-    const { id } = option;
-    if (name === 'student') {
-      setStudent(id);
-    }
+  function handleSelectedStudent(option) {
+    if (!option) return;
 
-    if (name === 'plan') {
-      setPlan(id);
-      setDuration(option.month);
-      setEndDate(addMonths(startDate, option.month));
-      setPriceTotal(option.month * option.price);
-    }
+    const { id } = option;
+
+    setStudent(id);
+  }
+  function handleSelectedPlan(option) {
+    setPlan(option);
+
+    setDuration(option.month);
+    setEndDate(addMonths(startDate, option.month));
   }
 
   async function handleSubmit(data) {
-    setRegister({
-      student_id: student,
-      plan_id: plan,
-      date: startDate,
-    });
+    setRegister(data);
+    try {
+      const { student_id, plan_id, start_date } = data;
 
-    console.log(`...${register}`);
-  }
-
-  function handleSubmitt(data) {
-    setRegister({
-      student_id: student,
-      plan_id: plan,
-      date: startDate,
-    });
-
-    console.log(
-      `+++${JSON.stringify(
-        setRegister({
-          student_id: student,
-          plan_id: plan,
-          date: startDate,
-        })
-      )}`
-    );
+      await api.post('register', { student_id, plan_id, start_date });
+      toast.success(`Matrícula realizada com sucesso.`);
+    } catch (e) {
+      toast.error(`Não foi possível cadastrar a matrícula. ${e}`);
+    }
   }
 
   return (
     <Container>
-      <Form schema={schema} onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Header>
           <Title>Cadastro de matrícula</Title>
           <Component>
-            <ButtonBack>
+            <ButtonBack type="submit">
               <MdKeyboardArrowLeft size={20} />
               <span>VOLTAR</span>
             </ButtonBack>
-            <ButtonConfirm type="submit" onClick={handleSubmitt}>
+            <ButtonConfirm type="submit">
               <MdDone size={20} />
               <span>SALVAR</span>
             </ButtonConfirm>
           </Component>
         </Header>
-        <Fields>
-          <div>
-            <Field>
-              <span>ALUNO</span>
-              <Select
-                name="student"
-                placeholder="Buscar aluno"
-                options={students}
-                onChange={handleOptionChange}
-              />
-            </Field>
-          </div>
+        <Fields name="filds">
+          <Field>
+            <Select
+              label="ALUNO"
+              name="student_id"
+              placeholder="Buscar aluno"
+              options={students}
+              onChange={handleSelectedStudent}
+            />
+          </Field>
 
-          <div>
+          <Field>
+            <Select
+              label="PLANO"
+              name="plan_id"
+              placeholder="Selecione o plano"
+              options={plans}
+              onChange={handleSelectedPlan}
+            />
+            <DatePicker
+              label="DATA DE INÍCIO"
+              name="start_date"
+              locale={pt}
+              onChange={handleStartDate}
+              selected={startDate}
+            />
+            <DatePicker
+              label="DATA DE TÉRMINO"
+              name="end_date"
+              locale={pt}
+              disabled
+              selected={endDate}
+            />
             <Field>
-              <span>PLANO</span>
-              <Select
-                name="plan"
-                placeholder="Selecione o plano"
-                options={plans}
-                onChange={handleOptionChange}
+              <Input
+                label="PRECO TOTAL"
+                name="priceFinal"
+                value={priceTotal}
+                readOnly
               />
             </Field>
-            <Field>
-              <span>DATA DE INÍCIO</span>
-              <DatePicker
-                name="start_date"
-                locale={pt}
-                onChange={handleDateClick}
-                selected={startDate}
-              />
-            </Field>
-            <Field>
-              <span>DATA DE TÉRMINO</span>
-              <DatePicker
-                name="end_date"
-                locale={pt}
-                disabled
-                selected={endDate}
-              />
-            </Field>
-            <Field>
-              <span>VALOR FINAL</span>
-              <Input name="priceFinal" value={priceTotal} readOnly />
-            </Field>
-          </div>
+          </Field>
         </Fields>
       </Form>
     </Container>

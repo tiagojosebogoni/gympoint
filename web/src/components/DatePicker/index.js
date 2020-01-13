@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { useField } from '@rocketseat/unform';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import { Container } from './styles';
 
-export default function DatePicker({ name, onChange, ...rest }) {
+export default function DatePicker({ label, name, onChange, ...rest }) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const [selected, setSelected] = useState(defaultValue);
@@ -22,7 +23,9 @@ export default function DatePicker({ name, onChange, ...rest }) {
   }, [ref.current, fieldName]); // eslint-disable-line
 
   return (
-    <>
+    <Container>
+      {label && <label htmlFor={fieldName}>{label}</label>}
+
       <ReactDatePicker
         name={fieldName}
         selected={selected}
@@ -34,16 +37,19 @@ export default function DatePicker({ name, onChange, ...rest }) {
         ref={ref}
         {...rest}
       />
+
       {error && <span>{error}</span>}
-    </>
+    </Container>
   );
 }
 
 DatePicker.propTypes = {
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
+  label: '',
   onChange() {},
 };

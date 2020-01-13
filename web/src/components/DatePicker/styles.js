@@ -13,7 +13,8 @@ export const Container = styled.div`
     font-weight: bold;
     margin: 20px 0 20px 0;
   }
+
   input {
-    font-size: 28px;
+    font-size: 14px;
   }
 `;
