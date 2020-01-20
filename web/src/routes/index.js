@@ -17,16 +17,15 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
 
-      <Route
-        path="/Student/store/:id/:mode"
-        isPrivate
-        component={StoreStudent}
-      />
       <Route path="/Student/list" isPrivate component={ListStudent} />
-      <Route path="/plan/store" isPrivate component={StorePlan} />
+      <Route path="/Student/store" isPrivate component={StoreStudent} />
+
       <Route path="/Plan/list" isPrivate component={ListPlan} />
+      <Route path="/plan/store" isPrivate component={StorePlan} />
+
       <Route path="/Register/list/" isPrivate component={RegisterList} />
       <Route path="/Register/store" isPrivate component={RegisterStore} />
+
       <Route path="/helpOrder" isPrivate component={HelpOrder} />
       <Route path="/" component={() => <h1>404</h1>} />
     </Switch>
