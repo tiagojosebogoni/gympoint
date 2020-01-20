@@ -1,193 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input } from '@rocketseat/unform';
-import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
-import * as Yup from 'yup';
+import { Form } from '@rocketseat/unform';
 
-import { toast } from 'react-toastify';
-import { addMonths } from 'date-fns';
-import pt from 'date-fns/locale/pt';
-
+import HeaderForm from '../../../components/HeaderForm';
+import SelectAsync from '../../../components/SelectAsync';
 import DatePicker from '../../../components/DatePicker';
-import Select from '../../../components/Select';
-import TCurrencyFormat from '../../../components/CurrencyFormat';
+import CurrencyFormat from '../../../components/CurrencyFormat';
 
-import {
-  Container,
-  Header,
-  ButtonBack,
-  Title,
-  Component,
-  ButtonConfirm,
-  Fields,
-  Field,
-} from './styles';
-import api from '../../../services/api';
+import { Container, Content } from './styles';
 
-const schema = Yup.object().shape({
-  name: Yup.string().required('Nome é obrigatório'),
-  email: Yup.string()
-    .email()
-    .required('E-mail é obrigatório '),
-  age: Yup.number()
-    .positive()
-    .integer()
-    .required(),
-  weight: Yup.number()
-    .positive()
-    .required(),
-  height: Yup.number()
-    .positive()
-    .required(),
-});
 export default function Store() {
-  const [students, setStudents] = useState([]);
-  const [plans, setPlans] = useState([]);
+  const [students, setStudents] = useState({});
+  const [plans, setPlans] = useState({});
 
-  const [student, setStudent] = useState(0);
-  const [plan, setPlan] = useState(0);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState();
-  const [duration, setDuration] = useState(0);
-  const [priceTotal, setPriceTotal] = useState(0);
-  const [register, setRegister] = useState({});
-
-  useEffect(() => {
-    async function loadStudents() {
-      const { data } = await api.get('students');
-
-      const st = data.map(s => {
-        const { id } = s;
-        const title = s.name;
-
-        return { id, title };
-      });
-
-      setStudents(st);
-    }
-
-    loadStudents();
-  }, []);
-
-  useEffect(() => {
-    if (!plan) return;
-
-    setPriceTotal(plan.month * plan.price);
-  }, [plan]);
-
-  useEffect(() => {
-    if (!plan || !startDate) return;
-
-    setEndDate(addMonths(startDate, plan.month));
-  }, [plan, startDate]);
-
-  useEffect(() => {
-    async function loadPlans() {
-      const { data } = await api.get('plans/0');
-
-      const pl = data.map(p => {
-        const { id } = p;
-        const { title } = p;
-        const month = p.duration;
-        const { price } = p;
-
-        return { id, title, month, price };
-      });
-
-      setPlans(pl);
-    }
-
-    loadPlans();
-  }, []);
-
-  function handleStartDate(date) {
-    setStartDate(date);
-  }
-
-  function handleSelectedStudent(option) {
-    if (!option) return;
-
-    const { id } = option;
-
-    setStudent(id);
-  }
-  function handleSelectedPlan(option) {
-    setPlan(option);
-
-    setDuration(option.month);
-    setEndDate(addMonths(startDate, option.month));
-  }
-
-  async function handleSubmit(data) {
-    /* setRegister(data);
-    try {
-      const { student_id, plan_id, start_date } = data;
-
-      await api.post('register', { student_id, plan_id, start_date });
-      toast.success(`Matrícula realizada com sucesso.`);
-    } catch (e) {
-      toast.error(`Não foi possível cadastrar a matrícula. ${e}`);
-    } */
-    console.log(data);
-  }
+  function loadStudents() {}
+  function loadPlans() {}
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <Header>
-          <Title>Cadastro de matrícula</Title>
-          <Component>
-            <ButtonBack type="submit">
-              <MdKeyboardArrowLeft size={20} />
-              <span>VOLTAR</span>
-            </ButtonBack>
-            <ButtonConfirm type="submit">
-              <MdDone size={20} />
-              <span>SALVAR</span>
-            </ButtonConfirm>
-          </Component>
-        </Header>
-        <Fields name="filds">
-          <Field>
-            <Select
-              label="ALUNO"
-              name="student_id"
-              placeholder="Buscar aluno"
-              options={students}
-              onChange={handleSelectedStudent}
-            />
-          </Field>
+      <HeaderForm />
+      <Form id="form">
+        <Content>
+          <SelectAsync
+            name="student_id"
+            options={students}
+            label="ALUNO"
+            placeholder="Buscar aluno"
+            noOptionsMessage={() => 'Não há alunos'}
+            loadOptions={loadStudents}
+            cacheOptions
+          />
+          <SelectAsync
+            name="plan_id"
+            options={plans}
+            label="PLANO"
+            placeholder="Buscar plano"
+            noOptionsMessage={() => 'Não planos'}
+            loadOptions={loadPlans}
+            cacheOptions
+          />
 
-          <Field>
-            <Select
-              label="PLANO"
-              name="plan_id"
-              placeholder="Selecione o plano"
-              options={plans}
-              onChange={handleSelectedPlan}
-            />
-            <DatePicker
-              label="DATA DE INÍCIO"
-              name="start_date"
-              locale={pt}
-              onChange={handleStartDate}
-              selected={startDate}
-            />
-            <DatePicker
-              label="DATA DE TÉRMINO"
-              name="end_date"
-              locale={pt}
-              disabled
-              selected={endDate}
-            />
-
-            <TCurrencyFormat
-              label="PRECO TOTAL"
-              name="priceFinal"
-              value={priceTotal}
-              disabled
-            />
-          </Field>
-        </Fields>
+          <DatePicker name="start_date" label="DATA DE INÍCIO" />
+          <DatePicker name="end_date" label="DATA DE TÉRMINO" />
+          <CurrencyFormat name="priceTotal" label="VALOR FINAL" />
+        </Content>
       </Form>
     </Container>
   );

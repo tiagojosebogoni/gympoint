@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-import * as Yup from 'yup';
 import {
   Container,
   Header,

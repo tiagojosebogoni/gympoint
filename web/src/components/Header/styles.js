@@ -5,9 +5,10 @@ export const Container = styled.div`
   flex-direction: row;
   background: #fff;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 30px;
 `;
 
 export const Content = styled.div`
