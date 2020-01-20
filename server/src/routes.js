@@ -18,12 +18,12 @@ routes.post('/students/:student_id/checkins', CheckinController.store);
 routes.get('/students/:student_id/checkins', CheckinController.index);
 routes.post('/students/:student_id/help-orders', HelpOrder.store);
 routes.get('/students/:student_id/help-orders', HelpOrder.show);
-routes.get('/students/:id', StudentController.index);
+routes.get('/students/:id', StudentController.show);
 
 routes.use(authMiddleware);
 
 routes.post('/students', StudentController.store);
-routes.get('/students', StudentController.indexAll);
+routes.get('/students', StudentController.index);
 routes.put('/students/:id', StudentController.update);
 
 routes.post('/plans', PlanControlle.store);
