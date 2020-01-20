@@ -6,10 +6,10 @@ export const Container = styled.button`
   justify-content: center;
   height: 36px;
   color: #fff;
-  background: ${props => (props.save ? '#ee4d64' : '#ccc')};
+  background: ${props => (props.confirm ? '#ee4d64' : '#ccc')};
   border-radius: 4px;
   border: 0;
-  margin-right: 20px;
+  margin-left: 15px;
   padding: 0 10px 0 10px;
 
   svg {

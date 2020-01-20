@@ -1,19 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useEffect } from 'react';
 import Select from 'react-select';
 
 import { useField } from '@rocketseat/unform';
-import { Container } from './styles';
 
 export default function ReactSelect({
   name,
   label,
   options,
   multiple,
-  onChange,
   ...rest
 }) {
-  const [test, setTest] = useState();
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
@@ -42,15 +38,18 @@ export default function ReactSelect({
     if (!defaultValue) return null;
 
     if (!multiple) {
-      return options.find(option => option.id === defaultValue);
+      const a = options.find(option => option.id === defaultValue);
+
+      return a;
     }
 
     return options.filter(option => defaultValue.includes(option.id));
   }
 
   return (
-    <Container>
+    <>
       {label && <label htmlFor={fieldName}>{label}</label>}
+
       <Select
         name={fieldName}
         aria-label={fieldName}
@@ -58,16 +57,12 @@ export default function ReactSelect({
         isMulti={multiple}
         defaultValue={getDefaultValue()}
         ref={ref}
-        value={test}
-        onChange={value => {
-          setTest(value);
-          onChange(value);
-        }}
         getOptionValue={option => option.id}
         getOptionLabel={option => option.title}
         {...rest}
       />
+
       {error && <span>{error}</span>}
-    </Container>
+    </>
   );
 }

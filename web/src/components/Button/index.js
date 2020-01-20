@@ -1,11 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Container } from './styles';
 
-export default function Button({ text, Image, save }) {
+export default function Button({ text, children, ...rest }) {
   return (
-    <Container save>
-      <Image size={20} />
+    <Container {...rest}>
+      {children}
       <span>{text}</span>
     </Container>
   );
 }
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};

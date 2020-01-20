@@ -1,12 +1,16 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
-import { Container, TInput } from './styles';
 
-export default function TCurrencyFormat({ label, name, ...rest }) {
+import { CurrencyInputContainer } from './styles';
+
+export default function TCurrencyFormat({ name, label, ...rest }) {
   return (
-    <Container>
+    <CurrencyInputContainer>
       {label && <label htmlFor={name}>{label}</label>}
+
       <CurrencyFormat
+        id={name}
+        aria-label={name}
         name={name}
         thousandSeparator="."
         decimalScale={2}
@@ -14,6 +18,6 @@ export default function TCurrencyFormat({ label, name, ...rest }) {
         prefix="R$"
         {...rest}
       />
-    </Container>
+    </CurrencyInputContainer>
   );
 }
