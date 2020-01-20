@@ -20,7 +20,7 @@ export const TextInputWrapper = styled.div`
   textarea {
     border: 2px solid #ddd;
     border-radius: 4px;
-    height: 35px;
+    height: 45px;
     padding: 0 15px;
     color: #444;
     width: 100%;

@@ -16,7 +16,7 @@ export const CurrencyInputContainer = styled.div`
   }
 
   input {
-    margin-top: 10px;
+    margin-top: 8px;
     border: 2px solid #ddd;
     border-radius: 4px;
     height: 45px;

@@ -1,111 +1,101 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from 'react-icons/md';
-
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { Header, ButtonConfirm } from '../Store/styles';
-import { Container, Title, PlansTable, Component } from './styles';
-import history from '../../../services/history';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import HeaderList from '../../../components/HeaderList';
+import Alert from '../../../components/Alert';
+import { Container, Content, Table } from './styles';
 import api from '../../../services/api';
 
-export default function List() {
+export default function List({ history }) {
   const [plans, setPlans] = useState([]);
-  const MySwal = withReactContent(Swal);
+
+  async function loadPlans(name) {
+    const response = await api.get('/plans/0', {
+      params: {
+        name,
+      },
+    });
+
+    setPlans(response.data);
+  }
 
   useEffect(() => {
-    async function loadPlans() {
-      const response = await api.get('plans/0');
-
-      setPlans(response.data);
-    }
-
     loadPlans();
-  }, []);
+  }, []); //eslint-disable-line
 
-  function handleEditPlan(plan) {
+  function handleEdit(plan) {
     history.push({
-      pathname: '/plan/Store',
-      state: { store: false, plan },
+      pathname: '/plan/store',
+      state: { plan },
     });
   }
 
-  function handleAdd() {
+  function handleNew() {
     history.push({
-      pathname: '/plan/Store',
-      state: { store: false, plan: {} },
+      pathname: '/plan/store',
+      state: null,
     });
   }
 
-  function handleDelete(id) {
-    MySwal.fire({
-      title: 'Tem certeza?',
-      text: 'Você não poderá reverter isso!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Sim, excluir!',
-    }).then(result => {
+  function handleDelete() {
+    Alert.delete().then(result => {
       if (result.value) {
-        MySwal.fire('Exclusão!', 'O plano foi excluido.', 'success');
-        api.delete(`plans/${id}`);
-
-        history.push('/plan/list');
+        toast.success('Em breve');
       }
     });
   }
 
   return (
     <Container>
-      {plans.title}
-      <Header>
-        <Title>Gerenciando planos</Title>
-        <Component>
-          <ButtonConfirm type="button" onClick={() => handleAdd()}>
-            <MdAdd size={20} />
-            <span>CADASTRAR</span>
-          </ButtonConfirm>
-        </Component>
-      </Header>
-      <PlansTable>
-        <thead>
-          <tr>
-            <th>TÍTULO</th>
-            <th>DURAÇÃO</th>
-            <th>VALOR p/MÊS</th>
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {plans.map(plan => (
+      <HeaderList
+        title="Gerenciando Planos"
+        onNew={handleNew}
+        find={loadPlans}
+      />
+      <Content>
+        <Table>
+          <thead>
             <tr>
-              <td>{plan.title}</td>
-              <td>{plan.duration}</td>
-              <td>R${plan.price}</td>
-              <td>
-                <button
-                  className="edit"
-                  type="button"
-                  onClick={() => handleEditPlan(plan)}
-                >
-                  editar
-                </button>
-              </td>
-              <td>
-                <button
-                  className="remove"
-                  type="button"
-                  onClick={() => handleDelete(plan.id)}
-                >
-                  apagar
-                </button>
-              </td>
+              <th>TÍTULO</th>
+              <th>DURAÇÃO</th>
+              <th>VALOR p/ MÊS</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
             </tr>
-          ))}
-        </tbody>
-      </PlansTable>
+          </thead>
+          <tbody>
+            {plans.map(plan => (
+              <tr key={plan.id}>
+                <td>{plan.title}</td>
+                <td>{plan.duration}</td>
+                <td>{plan.price}</td>
+                <td>
+                  <button
+                    className="edit"
+                    type="button"
+                    onClick={() => handleEdit(plan)}
+                  >
+                    editar
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="remove"
+                    type="button"
+                    onClick={() => handleDelete(plan.id)}
+                  >
+                    apagar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Content>
     </Container>
   );
 }
+
+List.propTypes = {
+  history: PropTypes.element.isRequired,
+};

@@ -18,7 +18,6 @@ export default function SelectInput({
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
   function parseSelectValue(selectRef) {
-    console.log(`>>>>${JSON.stringify(selectRef)}`);
     const selectValue = selectRef; // .props.value;
     if (!multiple) {
       return selectValue ? selectValue.id : '';
