@@ -1,27 +1,32 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import { parseISO, addMonths, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 import Register from '../models/Register';
-import User from '../models/User';
 
 import Mail from '../../lib/Mail';
 
 class RegisterController {
   async index(req, res) {
+    const { name = '' } = req.query;
+
     const registers = await Register.findAll({
       include: [
         {
-          model: User,
+          model: Student,
           as: 'student',
+          where: {
+            [Op.or]: [{ name: { [Op.iLike]: `%${name}%` } }],
+          },
           attributes: ['name'],
         },
 
         {
           model: Plan,
           as: 'plan',
-          attributes: ['title'],
+          attributes: ['title', 'duration'],
         },
       ],
       atributes: ['id', 'start_date', 'end_date', 'price', 'active'],
