@@ -19,10 +19,6 @@ export default function List({ history }) {
     setStudents(response.data);
   }
 
-  useEffect(() => {
-    loadStudents();
-  }, []); //eslint-disable-line
-
   function handleEdit(student) {
     history.push({
       pathname: '/student/Store',
@@ -44,6 +40,10 @@ export default function List({ history }) {
       }
     });
   }
+
+  useEffect(() => {
+    loadStudents();
+  }, []); //eslint-disable-line
 
   return (
     <Container>

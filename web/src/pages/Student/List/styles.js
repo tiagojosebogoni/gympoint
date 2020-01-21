@@ -8,36 +8,6 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const StudentTable = styled.table`
-  thead {
-    display: flex;
-    font-size: 16px;
-    font-weight: bold;
-    color: #444;
-    text-align: left;
-  }
-
-  tbody {
-    span {
-      font-size: 16px;
-      color: #666;
-      text-align: center;
-      line-height: 20px;
-    }
-
-    .edit {
-      font-size: 15px;
-      color: #4d85ee;
-      margin: 0 30px 0 10px;
-    }
-
-    .delete {
-      font-size: 15px;
-      color: #de3b3b;
-    }
-  }
-`;
-
 export const Content = styled.div`
   margin-top: 20px;
   padding: 30px;
@@ -47,42 +17,53 @@ export const Content = styled.div`
   width: 100%;
   max-width: 900px;
 `;
-
 export const Table = styled.table`
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
   text-align: left;
 
-  tr {
-    color: #666;
+  thead th {
+    color: #444;
     font-size: 16px;
-    line-height: 20px;
-  }
+    text-align: center;
 
-  tr + tr {
-    border-top: 1px solid #f5f5f5;
-  }
-
-  td,
-  th {
-    padding: 16px 0;
+    :nth-child(1) {
+      text-align: left;
+    }
+    :nth-child(2) {
+      text-align: left;
+    }
   }
 
   tbody {
-    .edit {
-      border: 0;
-      font-size: 15px;
-      color: #4d85ee;
-      background: #fff;
-      margin: 0 30px 0 10px;
-    }
+    td {
+      font-size: 16px;
+      color: #666;
+      text-align: center;
+      padding: 12px 0;
 
-    .remove {
-      border: 0;
-      font-size: 15px;
-      color: #de3b3b;
-      background: #fff;
-      margin: 0 30px 0 10px;
+      :nth-child(1) {
+        text-align: left;
+      }
+      :nth-child(2) {
+        text-align: left;
+      }
+
+      .edit {
+        border: 0;
+        font-size: 15px;
+        color: #4d85ee;
+        background: #fff;
+        margin: 0 30px 0 10px;
+      }
+
+      .remove {
+        border: 0;
+        font-size: 15px;
+        color: #de3b3b;
+        background: #fff;
+        margin: 0 30px 0 10px;
+      }
     }
   }
 `;
