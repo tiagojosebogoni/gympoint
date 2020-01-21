@@ -13,7 +13,6 @@ export default function CurrencyInput({ name, label, onChange, ...rest }) {
 
   useEffect(() => {
     setAmount(defaultValue);
-    console.log(onChange);
   }, [defaultValue, onChange]);
 
   useEffect(() => {

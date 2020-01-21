@@ -13,6 +13,7 @@ export const CurrencyInputContainer = styled.div`
     color: #444;
     font-size: 14px;
     line-height: 16px;
+    margin-bottom: 2px;
   }
 
   input {
