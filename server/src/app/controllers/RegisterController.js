@@ -26,7 +26,7 @@ class RegisterController {
         {
           model: Plan,
           as: 'plan',
-          attributes: ['title', 'duration'],
+          attributes: ['title', 'duration', 'price'],
         },
       ],
       atributes: ['id', 'start_date', 'end_date', 'price', 'active'],
@@ -93,29 +93,28 @@ class RegisterController {
   }
 
   async update(req, res) {
-    const { id, idStudent, idPlan } = req.params;
-    const plan = await Plan.findByPk(idPlan);
+    const { id } = req.params;
+
+    const { plan_id, start_date } = req.body;
+
+    const plan = await Plan.findByPk(plan_id);
     if (!plan) {
       return res.status(401).json({ error: 'Plano não encontrado' });
     }
 
-    const student = await Student.findByPk(idStudent);
-    if (!student) {
-      return res.status(401).json({ error: 'Aluno não encontrado' });
-    }
+    const formattedDateStart = parseISO(start_date);
     const register = await Register.findByPk(id);
     if (!register) {
       return res.status(401).json({ error: 'Matrícula não encontrada' });
     }
 
-    const { start_date } = register;
-    const end_date = addMonths(start_date, plan.duration);
+    const end_date = addMonths(formattedDateStart, plan.duration);
     const price = plan.price * plan.duration;
 
     const registerUpdate = await register.update({
-      plan_id: id,
+      plan_id,
       price,
-      start_date,
+      start_date: formattedDateStart,
       end_date,
     });
 

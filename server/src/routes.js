@@ -33,10 +33,7 @@ routes.delete('/plans/:id', PlanControlle.delete);
 
 routes.get('/registers', RegisterController.index);
 routes.post('/register', RegisterController.store);
-routes.put(
-  '/register/:id/students/:idStudent/plans/:idPlan',
-  RegisterController.update
-);
+routes.put('/register/:id/', RegisterController.update);
 routes.delete('/register/:id', RegisterController.delete);
 
 // routes.get('/help-orders', ResponderController.indexAll);

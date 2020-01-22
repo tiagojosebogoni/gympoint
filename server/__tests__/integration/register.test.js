@@ -63,10 +63,9 @@ describe('Matrículas', () => {
     });
 
     const response = await request(app)
-      .put(
-        `/register/${register.id}/students/${student.id}/plans/${planUpdate.id}`
-      )
-      .set('Authorization', `Bearer ${user.generateToken()}`);
+      .put(`/register/${register.id}`)
+      .set('Authorization', `Bearer ${user.generateToken()}`)
+      .send({ start_date: '2019-11-27T01:18:35', plan_id: planUpdate.id });
 
     const { price } = response.body;
     const aPrice = planUpdate.duration * planUpdate.price;
