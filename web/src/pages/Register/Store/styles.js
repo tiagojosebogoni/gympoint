@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import ContentWrapper from '../../../components/Content';
 
 export const Container = styled.div`
-  height: 100%;
   display: flex;
+  flex: 1;
   flex-direction: column;
   max-width: 900px;
+  width: 100%;
 `;
 
 export const Content = styled(ContentWrapper)`
@@ -13,10 +14,8 @@ export const Content = styled(ContentWrapper)`
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 15px;
   grid-row-gap: 20px;
-  align-items: center;
-  justify-content: center;
 
   div:nth-child(1) {
-    grid-column: 1 / 5;
+    grid-column: 1/ 5;
   }
 `;
