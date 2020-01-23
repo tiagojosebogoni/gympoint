@@ -1,17 +1,25 @@
 import React from 'react';
-import CModal from 'react-modal';
+// import CModal from 'react-modal';
+import PropTypes from 'prop-types';
 
-import { Content, ModalStyles } from './styles';
+import { Container, Content } from './styles';
 
-export default function Modal({ children, isOpen, handleClose }) {
+export default function Modal({ children, size, ...rest }) {
   return (
-    <CModal
-      style={ModalStyles}
-      isOpen={isOpen}
-      contentLabel="Example Modal"
-      onRequestClose={handleClose}
-    >
-      <Content>{children}</Content>
-    </CModal>
+    <Container {...rest}>
+      <Content size={size}>{children}</Content>
+    </Container>
   );
 }
+
+Modal.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+  size: PropTypes.number,
+};
+
+Modal.defaultProps = {
+  size: 600,
+};
