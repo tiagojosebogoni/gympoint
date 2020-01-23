@@ -51,6 +51,7 @@ export default function List({ history }) {
         title="Gerenciando Planos"
         onNew={handleNew}
         find={loadPlans}
+        search={false}
       />
       <Content>
         <Table>
