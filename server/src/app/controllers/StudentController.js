@@ -11,16 +11,19 @@ class StudentController {
   }
 
   async index(req, res) {
-    const { name = '' } = req.query;
+    const { page = 1, name = '' } = req.query;
 
-    const students = await Student.findAll({
+    const students = await Student.findAndCountAll({
+      limit: 15,
+      offset: (page - 1) * 15,
       where: {
         [Op.or]: [{ name: { [Op.iLike]: `%${name}%` } }],
       },
       order: [['name']],
     });
 
-    return res.json(students);
+    const pages = Math.round(students.count / 15);
+    return res.json({ pages, students });
   }
 
   async store(req, res) {

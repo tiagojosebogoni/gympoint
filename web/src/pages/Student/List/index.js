@@ -2,21 +2,25 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import HeaderList from '../../../components/HeaderList';
+import Pagination from '../../../components/Pagination';
 import Alert from '../../../components/Alert';
 import { Container, Content, Table } from './styles';
 import api from '../../../services/api';
 
 export default function List({ history }) {
   const [students, setStudents] = useState([]);
+  const [pages, setPages] = useState(0);
 
-  async function loadStudents(name) {
+  async function loadStudents(name, page) {
     const response = await api.get('/students', {
       params: {
         name,
+        page,
       },
     });
 
-    setStudents(response.data);
+    setStudents(response.data.students.rows);
+    setPages(response.data.pages);
   }
 
   function handleEdit(student) {
@@ -91,6 +95,7 @@ export default function List({ history }) {
             ))}
           </tbody>
         </Table>
+        <Pagination load={loadStudents} pages={pages} />
       </Content>
     </Container>
   );
