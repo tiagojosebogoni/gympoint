@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Container } from './styles';
 
-export default function Pagination({ load }) {
+export default function Pagination({ load, pages }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -26,7 +26,9 @@ export default function Pagination({ load }) {
           setPage(page + 1);
           load('', page);
         }}
+        disabled={page === pages}
       >
+        {console.log(`${page}....${pages}`)}
         <MdKeyboardArrowRight size={40} />
       </button>
     </Container>
@@ -35,4 +37,5 @@ export default function Pagination({ load }) {
 
 Pagination.propTypes = {
   load: PropTypes.func.isRequired,
+  pages: PropTypes.number.isRequired,
 };
