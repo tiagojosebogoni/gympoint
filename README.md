@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="/src/assets/logo.svg" width="200px" />
 </h1>
 
 ### Sistema para controle de alunos e matrículas 
@@ -13,7 +13,7 @@ Aplicativo de teste para encontrar/cadastrar/remover desenvolvedores
 
 <h1 align="center">
 <br>
-DevRadar
+Gympoint
 </h1>
 
 <p align="center">Aplicativos para controle de alunos e matrículas e interação entre aluno e professor</p>
@@ -25,8 +25,8 @@ DevRadar
 </p>
 
 <div>
-  <img src="/web/assets/Telacheia.png" alt="web" height="425">
-  <img src="/devRadar/assets/Main.jpg" alt="mobile" height="425">
+  <img src="/web/ListagemAlunos.png" alt="web" height="425">
+  <img src="/mobile/PedidosAuxilio.jpg" alt="mobile" height="425">
 </div>
 
 <hr />
