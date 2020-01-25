@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { MdCheckCircle } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+
 import HeaderList from '../../../components/HeaderList';
+import Pagination from '../../../components/Pagination';
 import Alert from '../../../components/Alert';
-import { Container, Content, RegisterTable } from './styles';
 import api from '../../../services/api';
+import { Container, Content, RegisterTable } from './styles';
 
 export default function List({ history }) {
   const [registers, setRegisters] = useState([]);
+  const [pages, setPages] = useState(1);
 
-  async function loadRegisters(name) {
+  async function loadRegisters(name = '', page = 1) {
     const response = await api.get('/registers', {
       params: {
         name,
+        page,
       },
     });
 
-    const data = response.data.map(register => ({
+    const data = response.data.registers.rows.map(register => ({
       ...register,
       start_dateFormatted: format(
         parseISO(register.start_date),
@@ -34,6 +37,7 @@ export default function List({ history }) {
     }));
 
     setRegisters(data);
+    setPages(response.data.pages);
   }
 
   useEffect(() => {
@@ -42,14 +46,14 @@ export default function List({ history }) {
 
   function handleEdit(register) {
     history.push({
-      pathname: '/register/Store',
+      pathname: '/register/store',
       state: { register },
     });
   }
 
   function handleNew() {
     history.push({
-      pathname: '/register/Store',
+      pathname: '/register/store',
     });
   }
 
@@ -118,11 +122,12 @@ export default function List({ history }) {
             ))}
           </tbody>
         </RegisterTable>
+        <Pagination load={loadRegisters} pages={pages} />
       </Content>
     </Container>
   );
 }
-
+/*
 List.propTypes = {
   history: PropTypes.element.isRequired,
-};
+}; */

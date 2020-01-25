@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import { toast } from 'react-toastify';
 import { addMonths, parseISO } from 'date-fns';
 import { Form } from '@rocketseat/unform';
@@ -13,22 +13,11 @@ import api from '../../../services/api';
 import { Container, Content } from './styles';
 
 const schema = Yup.object().shape({
-  name: Yup.string()
-    .max(255, 'Nome pode ter no máximo 255 caracteres')
-    .required('Nome é obrigatório'),
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .max(255, 'E-mail pode ter no máximo 255 caracteres')
-    .required('E-mail é obrigatório'),
-  age: Yup.number()
-    .typeError('Idade é obrigatório')
-    .required('Idade é obrigatório'),
-  weight: Yup.number()
-    .typeError('Peso é obrigatório')
-    .required('Peso é obrigatório'),
-  height: Yup.number()
-    .typeError('Altura é obrigatória')
-    .required('Altura é obrigatória'),
+  student_id: Yup.string().required('Aluno é obrigatório.'),
+  plan_id: Yup.string().required('Plano é obrigatório.'),
+  start_date: Yup.date()
+    .typeError('Data de início é obrigatório')
+    .required('Dade de início é obrigatório.'),
 });
 
 export default function Store({ history }) {
@@ -44,14 +33,14 @@ export default function Store({ history }) {
 
   async function loadPlans() {
     const responsePlans = await api.get('/plans/0');
-    setPlans(responsePlans.data);
+    setPlans(responsePlans.data.plans.rows);
   }
 
   async function loadStudents() {
     const responseStudent = await api.get('/students');
 
     setStudents(
-      responseStudent.data.map(student => {
+      responseStudent.data.students.rows.map(student => {
         return { id: student.id, title: student.name };
       })
     );
@@ -88,7 +77,9 @@ export default function Store({ history }) {
   }, [plan, startDate]); //eslint-disable-line
 
   useEffect(() => {
-    setPriceFinal(plan.duration * plan.price);
+    if (plan.id) {
+      setPriceFinal(plan.duration * plan.price);
+    } else setPriceFinal(0);
   }, [plan]);  //eslint-disable-line
 
   useEffect(() => {
@@ -113,7 +104,7 @@ export default function Store({ history }) {
         id="form"
         initialData={initialData}
         onSubmit={handleSubmit}
-        // schema={schema}
+        schema={schema}
       >
         <Content>
           <SelectAsync
@@ -163,7 +154,3 @@ export default function Store({ history }) {
     </Container>
   );
 }
-
-Store.propTypes = {
-  history: PropTypes.element.isRequired,
-};

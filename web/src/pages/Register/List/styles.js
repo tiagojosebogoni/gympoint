@@ -55,6 +55,7 @@ export const RegisterTable = styled.table`
 
 export const Content = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 20px;
   padding: 30px;
   background: #fff;

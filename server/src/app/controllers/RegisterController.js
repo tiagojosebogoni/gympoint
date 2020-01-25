@@ -10,9 +10,11 @@ import Mail from '../../lib/Mail';
 
 class RegisterController {
   async index(req, res) {
-    const { name = '' } = req.query;
+    const { page = 1, name = '' } = req.query;
 
-    const registers = await Register.findAll({
+    const registers = await Register.findAndCountAll({
+      limit: process.env.ITENS_PAGE,
+      offset: (page - 1) * process.env.ITENS_PAGE,
       include: [
         {
           model: Student,
@@ -32,7 +34,8 @@ class RegisterController {
       atributes: ['id', 'start_date', 'end_date', 'price', 'active'],
     });
 
-    return res.json(registers);
+    const pages = Math.ceil(registers.count / process.env.ITENS_PAGE);
+    return res.json({ pages, registers });
   }
 
   async store(req, res) {
