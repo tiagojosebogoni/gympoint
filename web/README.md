@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="/web/src/assets/logo.svg" width="200px" />
 </h1>
 
 
@@ -14,7 +14,7 @@ Aplicativo de teste para encontrar/cadastrar/remover desenvolvedores
 
 <h1 align="center">
 <br>
-DevRadar
+Gympoint
 </h1>
 
 <p align="center">Sistema de gerenciamento de alunos e matrículas</p>
