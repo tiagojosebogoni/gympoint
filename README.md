@@ -1,8 +1,10 @@
-# DevRadar 🛰
+<h1 align="center">
+  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+</h1>
 
-### Aplicativo para encontrar desenvolvedor por distância e tecnologias
+### Sistema para controle de alunos e matrículas 
 
-## Semana OmniStack 10.0
+## Gympoint
 
 Aplicativo de teste para encontrar/cadastrar/remover desenvolvedores
 -Implementado usando ReactJS, React Native e NodeJS
@@ -11,13 +13,10 @@ Aplicativo de teste para encontrar/cadastrar/remover desenvolvedores
 
 <h1 align="center">
 <br>
-  🛰
-<br>
-<br>
 DevRadar
 </h1>
 
-<p align="center">Aplicativo para encontrar desenvolvedor por distância e tecnologias</p>
+<p align="center">Aplicativos para controle de alunos e matrículas e interação entre aluno e professor</p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
@@ -38,12 +37,12 @@ DevRadar
 - ⚛️ **React Native** —  Uma biblioteca JavaScript para criar interfaces de usuário
 - 💹 **Node Js** — O Node.js é um ambiente de tempo de execução de código aberto, multiplataforma, JavaScript que executa o código JavaScript fora de um navegador.
 - 📄 **MongoDB** - Um banco de dados orientado a documentos de plataforma cruzada e código aberto
-- ♻️ **Socket IO** — Uma biblioteca para aplicativos da web em tempo real
+
 
 ## Getting started
 
-1. Clone o repositório usando  `git clone https://github.com/tiagojosebogoni/devRadar.git`
-2. Pelo terminal entre na pasta devRadar<br />
+1. Clone o repositório usando  `git clone https://github.com/tiagojosebogoni/gympoint.git`
+2. Pelo terminal entre na pasta gympoint<br />
 
 ### Getting started with the backend server
 
@@ -59,7 +58,7 @@ DevRadar
 
 ### Getting started with the mobile app
 
-1. Entre na pasta devRadar.
+1. Entre na pasta mobile.
 2. Execute 'yarn' para instalar as depedências.
 3. Execute 'yarn start' para rodar a aplicação.
 4. Instale o expo no seu celular.
