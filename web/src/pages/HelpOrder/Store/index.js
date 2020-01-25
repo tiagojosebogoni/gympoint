@@ -31,16 +31,11 @@ export default function Store({ helpOrder, setShowModal }) {
         <Question
           name="question"
           value={initialData.question}
-          style={{ textTransform: 'capitalize' }}
           multiline
           disabled
         />
         <Title>SUA RESPOSTA</Title>
-        <Answer
-          name="answer"
-          style={{ textTransform: 'capitalize' }}
-          multiline
-        />
+        <Answer name="answer" multiline />
       </Form>
       <Responder confirm type="submit" form="form" text="Responder aluno">
         <MdDone size={20} />

@@ -27,6 +27,7 @@ export const Question = styled(Input).attrs({
   line-height: 26px;
   text-align: left;
   margin-bottom: 10px;
+  padding: 10px;
 `;
 
 export const Answer = styled(Question)``;

@@ -33,7 +33,19 @@ export default function Store({ history }) {
 
   async function loadPlans() {
     const responsePlans = await api.get('/plans/0');
-    setPlans(responsePlans.data.plans.rows);
+
+    const formattedPlans = responsePlans.data.plans.rows.map(p => {
+      const formattedTitle = `${p.title} - ${p.duration}mês(es)`;
+
+      return {
+        id: p.id,
+        title: formattedTitle,
+        duration: p.duration,
+        price: p.price,
+      };
+    });
+
+    setPlans(formattedPlans);
   }
 
   async function loadStudents() {

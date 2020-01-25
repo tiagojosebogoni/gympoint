@@ -15,7 +15,7 @@ export const SelectInputWrapper = styled.div`
     margin-top: 10px;
     border: 2px solid #ddd;
     border-radius: 4px;
-    padding: 0 15px;
+    padding: 0 5px;
     color: #444;
     width: 100%;
     height: 45px;
