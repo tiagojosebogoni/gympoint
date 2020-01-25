@@ -46,7 +46,7 @@ export default function Store({ history }) {
   async function handleSubmit(data) {
     try {
       if (id > 0) {
-        const response = await api.put(`/students/${id}`, data);
+        await api.put(`/students/${id}`, data);
         toast.success('Aluno editado com sucesso.');
       } else {
         await api.post(`/students/`, data);

@@ -14,15 +14,15 @@ class StudentController {
     const { page = 1, name = '' } = req.query;
 
     const students = await Student.findAndCountAll({
-      limit: 15,
-      offset: (page - 1) * 15,
+      limit: process.env.ITENS_PAGE,
+      offset: (page - 1) * process.env.ITENS_PAGE,
       where: {
         [Op.or]: [{ name: { [Op.iLike]: `%${name}%` } }],
       },
       order: [['name']],
     });
 
-    const pages = Math.round(students.count / 15);
+    const pages = Math.ceil(students.count / process.env.ITENS_PAGE);
     return res.json({ pages, students });
   }
 
