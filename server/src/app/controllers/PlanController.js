@@ -4,14 +4,21 @@ import Plan from '../models/Plan';
 class PlanController {
   async index(req, res) {
     const { id } = req.params;
+    const { page = 1 } = req.query;
+
     if (id > 0) {
       const plan = await Plan.findByPk(id);
       return res.json(plan);
     }
 
-    const plans = await Plan.findAll();
+    const plans = await Plan.findAndCountAll({
+      limit: process.env.ITENS_PAGE,
+      offset: (page - 1) * process.env.ITENS_PAGE,
+    });
 
-    return res.json(plans);
+    const pages = Math.ceil(plans.count / process.env.ITENS_PAGE);
+
+    return res.json({ pages, plans });
   }
 
   async store(req, res) {

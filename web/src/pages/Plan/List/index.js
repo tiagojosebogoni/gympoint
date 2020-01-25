@@ -3,20 +3,24 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import HeaderList from '../../../components/HeaderList';
 import Alert from '../../../components/Alert';
+import Pagination from '../../../components/Pagination';
 import { Container, Content, Table } from './styles';
 import api from '../../../services/api';
 
 export default function List({ history }) {
   const [plans, setPlans] = useState([]);
+  const [pages, setPages] = useState([]);
 
-  async function loadPlans(name) {
+  async function loadPlans(name, page) {
     const response = await api.get('/plans/0', {
       params: {
         name,
+        page,
       },
     });
 
-    setPlans(response.data);
+    setPlans(response.data.plans.rows);
+    setPages(response.data.pages);
   }
 
   useEffect(() => {
@@ -92,6 +96,7 @@ export default function List({ history }) {
             ))}
           </tbody>
         </Table>
+        <Pagination load={loadPlans} pages={pages} />
       </Content>
     </Container>
   );

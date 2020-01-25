@@ -114,3 +114,7 @@ export default function Store({ history }) {
     </Container>
   );
 }
+
+Store.propTypes = {
+  history: PropTypes.element.isRequired,
+};
