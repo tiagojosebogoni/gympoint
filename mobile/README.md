@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src="../web/src/assets/logo.svg" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="../web/src/assets/logo.png" width="200px" />
 </h1>
 
 ### Aplicativo para registrar frequencia na academia e pergunta para os instrutores
