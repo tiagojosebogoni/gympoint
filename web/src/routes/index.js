@@ -24,7 +24,7 @@ export default function Routes() {
       <Route path="/plan/store" isPrivate component={StorePlan} />
 
       <Route path="/register/list" isPrivate component={RegisterList} />
-      <Route path="/register/list" isPrivate component={RegisterStore} />
+      <Route path="/register/store" isPrivate component={RegisterStore} />
 
       <Route path="/helpOrder" isPrivate component={HelpOrder} />
       <Route path="/" component={() => <h1>404</h1>} />
