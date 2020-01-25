@@ -1,18 +1,17 @@
-# DevRadar 🛰
+<h1 align="center">
+  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+</h1>
 
 ### Aplicativo para registrar frequencia na academia e pergunta para os instrutores
 
 ## Gympoint
 
 Aplicativo para registrar frequencia dos alunos na academia  e fazer perguntas para os instrutores
-- Implementado usando ReactJS, React Native e NodeJS
+- Implementado usando React Native
 
 
 
 <h1 align="center">
-<br>
-  🛰
-<br>
 <br>
 Gympoint
 </h1>
@@ -26,7 +25,7 @@ Gympoint
 </p>
 
 <div>
-  <img src="/Checkin.jpg" alt="checkin" height="425">
+  <img src="Checkin.jpg" alt="checkin" height="425">
   <img src="PedidosAuxilio.jpg" alt="pedidoauxilio" height="425">
   <img src="PedidoAuxilioRespondido.jpg" alt="pedidoauxilioresposta" height="425">
 </div>

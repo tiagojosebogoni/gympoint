@@ -1,18 +1,18 @@
-# Gympoint 🛰
+<h1 align="center">
+  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+</h1>
+
 
 ### Sistema de gerenciamento de alunos e matrículas
 
 ## Gympoint
 
 Aplicativo de teste para encontrar/cadastrar/remover desenvolvedores
--Implementado usando ReactJS, React Native e NodeJS
+-Implementado usando ReactJS
 
 
 
 <h1 align="center">
-<br>
-  🛰
-<br>
 <br>
 DevRadar
 </h1>
