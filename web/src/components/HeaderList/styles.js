@@ -13,7 +13,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Title = styled.text`
+export const Title = styled.p`
   font-weight: bold;
   font-size: 24px;
   color: #444444;

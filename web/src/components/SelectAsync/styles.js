@@ -30,9 +30,7 @@ export const SelectInputWrapper = styled.div`
   }
 
   span {
-    margin-top: 8px;
+    margin-top: 10px;
     color: #ee4d64;
-    align-self: flex-start;
-    font-weight: bold;
   }
 `;

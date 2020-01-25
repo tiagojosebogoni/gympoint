@@ -23,7 +23,7 @@ export default function HeaderList({ title, onNew, find, buttonNew, search }) {
             name="search"
             placeholder="Pesquisar por alunos"
             onChange={e => find(e.target.value)}
-            visible={search}
+            visible={search ? 'true' : 'false'}
           />
         )}
       </Component>
@@ -33,7 +33,7 @@ export default function HeaderList({ title, onNew, find, buttonNew, search }) {
 
 HeaderList.propTypes = {
   title: PropTypes.string.isRequired,
-  onNew: PropTypes.func.isRequired,
+  onNew: PropTypes.func,
   find: PropTypes.func.isRequired,
   buttonNew: PropTypes.bool,
   search: PropTypes.bool,
@@ -42,4 +42,5 @@ HeaderList.propTypes = {
 HeaderList.defaultProps = {
   buttonNew: true,
   search: true,
+  onNew: null,
 };

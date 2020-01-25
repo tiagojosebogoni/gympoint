@@ -28,7 +28,6 @@ export default function Pagination({ load, pages }) {
         }}
         disabled={page === pages}
       >
-        {console.log(`${page}....${pages}`)}
         <MdKeyboardArrowRight size={40} />
       </button>
     </Container>

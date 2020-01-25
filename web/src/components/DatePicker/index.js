@@ -1,9 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import pt from 'date-fns/locale/pt';
-import ReactDatePicker, {
-  registerLocale,
-  setDefaultLocale,
-} from 'react-datepicker';
+import PropTypes from 'prop-types';
+import ReactDatePicker from 'react-datepicker';
 
 import { useField } from '@rocketseat/unform';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,8 +9,8 @@ import { DatePicketInputWrapper } from './styles';
 
 export default function DatePicker({ name, label, ...rest }) {
   const ref = useRef(null);
-  const { fieldName, registerField, defaultValue, error } = useField(name);
-  const [selected, setSelected] = useState(defaultValue);
+  const { fieldName, registerField, error } = useField(name);
+  // const [selected, setSelected] = useState(defaultValue);
 
   useEffect(() => {
     registerField({
@@ -45,3 +43,11 @@ export default function DatePicker({ name, label, ...rest }) {
     </DatePicketInputWrapper>
   );
 }
+
+DatePicker.propTypes = {
+  label: PropTypes.string,
+};
+
+DatePicker.defaultProps = {
+  label: '',
+};

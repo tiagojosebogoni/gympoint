@@ -18,7 +18,7 @@ export const Container = styled.div`
   span {
     color: #fb6f91;
     align-self: flex-start;
-    margin-top: 10px;
+    margin-top: 60px;
     font-weight: bold;
   }
 `;

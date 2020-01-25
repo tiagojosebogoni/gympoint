@@ -8,7 +8,7 @@ export const Header = styled.div`
   justify-content: space-between;
 `;
 
-export const Title = styled.text`
+export const Title = styled.p`
   font-weight: bold;
   font-size: 24px;
   color: #444444;
